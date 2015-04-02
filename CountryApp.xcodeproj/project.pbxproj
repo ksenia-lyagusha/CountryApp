@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C569DF491ACC928A00312F3F /* CountryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C569DF481ACC928A00312F3F /* CountryModel.m */; };
 		C5D4593C1AC8645D00E1C4EC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D4593B1AC8645D00E1C4EC /* main.m */; };
 		C5D4593F1AC8645D00E1C4EC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D4593E1AC8645D00E1C4EC /* AppDelegate.m */; };
 		C5D459471AC8645D00E1C4EC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C5D459461AC8645D00E1C4EC /* Images.xcassets */; };
@@ -27,6 +28,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C569DF471ACC928A00312F3F /* CountryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountryModel.h; sourceTree = "<group>"; };
+		C569DF481ACC928A00312F3F /* CountryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CountryModel.m; sourceTree = "<group>"; };
 		C5D459361AC8645D00E1C4EC /* CountryApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CountryApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5D4593A1AC8645D00E1C4EC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C5D4593B1AC8645D00E1C4EC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -83,6 +86,8 @@
 			children = (
 				C5D4593D1AC8645D00E1C4EC /* AppDelegate.h */,
 				C5D4593E1AC8645D00E1C4EC /* AppDelegate.m */,
+				C569DF471ACC928A00312F3F /* CountryModel.h */,
+				C569DF481ACC928A00312F3F /* CountryModel.m */,
 				C5D4595F1AC8666C00E1C4EC /* CountryViewController.h */,
 				C5D459601AC8666C00E1C4EC /* CountryViewController.m */,
 				C5D459611AC8666C00E1C4EC /* CountryViewController.xib */,
@@ -221,6 +226,7 @@
 			files = (
 				C5D4593F1AC8645D00E1C4EC /* AppDelegate.m in Sources */,
 				C5D4593C1AC8645D00E1C4EC /* main.m in Sources */,
+				C569DF491ACC928A00312F3F /* CountryModel.m in Sources */,
 				C5D459621AC8666C00E1C4EC /* CountryViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -404,6 +410,7 @@
 				C5D4595B1AC8645D00E1C4EC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C5D4595C1AC8645D00E1C4EC /* Build configuration list for PBXNativeTarget "CountryAppTests" */ = {
 			isa = XCConfigurationList;
@@ -412,6 +419,7 @@
 				C5D4595E1AC8645D00E1C4EC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -7,27 +7,43 @@
 //
 
 #import "CountryViewController.h"
+#import "CountryModel.h"
 
 @interface CountryViewController ()
-
+@property CountryModel *countryModel;
 @end
 
 @implementation CountryViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     self.title = @"Countries";
+    self.countryModel = [[CountryModel alloc] init];
+    [self.countryModel fillArray];
 }
 
 #pragma mark - DataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 1;
 }
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    NSString *str;
+    if (section == 0) {
+        str = @"Europe";
+    } else {
+        str = @"Asia";
+    }
+    return str;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)sectiontableView
 {
-    return sectiontableView == 0 ? 10 : 20;
+    return self.countryModel.countries.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -36,8 +52,9 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"identifier"];
     }
-    cell.textLabel.text = [NSString stringWithFormat:@"%li", indexPath.row];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%li", [self tableView:tableView numberOfRowsInSection:indexPath.section] - indexPath.row - 1];
+   
+    cell.textLabel.text = self.countryModel.countries[indexPath.row];
+    cell.detailTextLabel.text = self.countryModel.capitals[indexPath.row];
     
     return cell;
 }
@@ -46,13 +63,26 @@
 
 - (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"%@", indexPath);
-  
+    [self showAlert:self.countryModel.countries[indexPath.row]];
+    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 50;
+}
+
+- (void)showAlert:(NSString*)country
+{
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"CountryApp"
+                                                                    message:[NSString stringWithFormat:@"You selected %@",country]
+                                                             preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Cheel out"
+                                                       style:UIAlertActionStyleDefault
+                                                     handler:nil];
+    [alert addAction:okAction];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 @end
