@@ -41,7 +41,7 @@
 		C5D459541AC8645D00E1C4EC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C5D459551AC8645D00E1C4EC /* CountryAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CountryAppTests.m; sourceTree = "<group>"; };
 		C5D4595F1AC8666C00E1C4EC /* CountryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountryViewController.h; sourceTree = "<group>"; };
-		C5D459601AC8666C00E1C4EC /* CountryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CountryViewController.m; sourceTree = "<group>"; };
+		C5D459601AC8666C00E1C4EC /* CountryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CountryViewController.m; sourceTree = "<group>"; wrapsLines = 0; };
 		C5D459611AC8666C00E1C4EC /* CountryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CountryViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 

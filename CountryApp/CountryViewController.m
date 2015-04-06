@@ -20,7 +20,20 @@
     [super viewDidLoad];
     self.title = @"Countries";
     self.countryModel = [[CountryModel alloc] init];
-    [self.countryModel fillArray];
+//    
+//    
+//    NSMutableArray *array = [NSMutableArray arrayWithObjects:@25, @8, @1991, @24, nil];
+//    for (int i = 0; i < array.count-1; i++) {
+//        for (int j = 0; j < array.count-1; j++) {
+//            if (array[j] > array[j+1]) {
+//                int k = [array[j+1] intValue];
+//                array[j+1] = array[j];
+//                array[j] = @(k);
+//            }
+//        }
+//    }
+//    NSLog(@"%@", array);
+
 }
 
 #pragma mark - DataSource
@@ -43,7 +56,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)sectiontableView
 {
-    return self.countryModel.countries.count;
+    return [self.countryModel countOfCountries];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -52,9 +65,9 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"identifier"];
     }
-   
-    cell.textLabel.text = self.countryModel.countries[indexPath.row];
-    cell.detailTextLabel.text = self.countryModel.capitals[indexPath.row];
+//    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.textLabel.text = [self.countryModel getNameOfCountryForIndex:indexPath.row];
+    cell.detailTextLabel.text = [self.countryModel getNameOfCapitalForIndex:indexPath.row];
     
     return cell;
 }
@@ -63,8 +76,34 @@
 
 - (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self showAlert:self.countryModel.countries[indexPath.row]];
+//    [self showAlert:self.countryModel.countries[indexPath.row]];
     
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    
+    UITableViewCellAccessoryType accessory;
+    switch (indexPath.row) {
+        case 0:
+            accessory = UITableViewCellAccessoryDetailButton;
+            break;
+        case 1:
+            accessory = UITableViewCellAccessoryDetailDisclosureButton;
+            break;
+        case 2:
+            accessory = UITableViewCellAccessoryDisclosureIndicator;
+            break;
+        case 3:
+            accessory = UITableViewCellAccessoryCheckmark;
+            break;
+        default:
+            break;
+    }
+    if (cell.accessoryType == UITableViewCellAccessoryNone){
+        cell.accessoryType = accessory;
+    } else {
+        cell.accessoryType = UITableViewCellAccessoryNone;
+    }
+
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -84,5 +123,7 @@
     [alert addAction:okAction];
     [self presentViewController:alert animated:YES completion:nil];
 }
+
+
 
 @end

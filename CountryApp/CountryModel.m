@@ -8,7 +8,22 @@
 
 #import "CountryModel.h"
 
+@interface CountryModel()
+@property NSArray *countries;
+@property NSArray *capitals;
+@property NSArray *array;
+@end
+
 @implementation CountryModel
+
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        [self fillArray];
+    }
+    return self;
+}
 
 - (void)fillArray
 {
@@ -16,6 +31,19 @@
     self.capitals = @[@"Kyiv", @"Warsaw", @"Vienna", @"Beijing", @"Seoul"];
 }
 
+- (NSInteger)countOfCountries
+{
+    return self.countries.count;
+}
 
+- (NSString*)getNameOfCountryForIndex:(NSInteger)numberOfRow
+{
+    return [self.countries objectAtIndex:numberOfRow];
+}
+
+- (NSString*)getNameOfCapitalForIndex:(NSInteger)numberOfRow
+{
+    return [self.capitals objectAtIndex:numberOfRow];
+}
 
 @end

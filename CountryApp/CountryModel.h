@@ -9,8 +9,8 @@
 #import <Foundation/Foundation.h>
 
 @interface CountryModel : NSObject
-@property NSArray *countries;
-@property NSArray *capitals;
-- (void)fillArray;
+- (NSInteger)countOfCountries;
+- (NSString*)getNameOfCountryForIndex:(NSInteger)numberOfRow;
+- (NSString*)getNameOfCapitalForIndex:(NSInteger)numberOfRow;
 
 @end

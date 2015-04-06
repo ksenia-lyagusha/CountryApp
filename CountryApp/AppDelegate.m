@@ -19,7 +19,7 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    CountryViewController *countryController = [[CountryViewController alloc] init];
+    UIViewController *countryController = [[CountryViewController alloc] init];
        
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:countryController];
     self.window.rootViewController = navigationController;
