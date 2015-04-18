@@ -19,7 +19,7 @@
 {
     [super viewDidLoad];
     self.title = @"Countries";
-    self.countryModel = [[CountryModel alloc] init];
+    self.countryModel = [[CountryModel alloc] init] ;
 }
 
 #pragma mark - DataSource
