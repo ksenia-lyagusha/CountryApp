@@ -9,8 +9,11 @@
 #import <Foundation/Foundation.h>
 
 @interface CountryModel : NSObject
-- (NSInteger)countOfCountries;
-- (NSString*)getNameOfCountryForIndex:(NSInteger)numberOfRow;
-- (NSString*)getNameOfCapitalForIndex:(NSInteger)numberOfRow;
+
+- (NSInteger)countOfCountriesInContinent:(NSString*)continent;
+- (NSString*)getNameOfCountryForContinent:(NSString*)continent atIndex:(NSInteger)index;
+- (NSString*)getNameOfCapitalForContinent:(NSString*)continent atIndex:(NSInteger)index;
+- (NSString*)titleOfContinentForIndex:(NSInteger)index;
+- (NSInteger)numberOfContinents;
 
 @end

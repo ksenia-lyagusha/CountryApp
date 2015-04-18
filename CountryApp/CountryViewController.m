@@ -20,43 +20,25 @@
     [super viewDidLoad];
     self.title = @"Countries";
     self.countryModel = [[CountryModel alloc] init];
-//    
-//    
-//    NSMutableArray *array = [NSMutableArray arrayWithObjects:@25, @8, @1991, @24, nil];
-//    for (int i = 0; i < array.count-1; i++) {
-//        for (int j = 0; j < array.count-1; j++) {
-//            if (array[j] > array[j+1]) {
-//                int k = [array[j+1] intValue];
-//                array[j+1] = array[j];
-//                array[j] = @(k);
-//            }
-//        }
-//    }
-//    NSLog(@"%@", array);
-
 }
 
 #pragma mark - DataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return [self.countryModel numberOfContinents];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    NSString *str;
-    if (section == 0) {
-        str = @"Europe";
-    } else {
-        str = @"Asia";
-    }
+    NSString *str = [self.countryModel titleOfContinentForIndex:section];
     return str;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)sectiontableView
 {
-    return [self.countryModel countOfCountries];
+    NSString *continent = [self.countryModel titleOfContinentForIndex:sectiontableView];
+    return [self.countryModel countOfCountriesInContinent:continent];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -66,8 +48,13 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"identifier"];
     }
 //    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.textLabel.text = [self.countryModel getNameOfCountryForIndex:indexPath.row];
-    cell.detailTextLabel.text = [self.countryModel getNameOfCapitalForIndex:indexPath.row];
+    NSString *continent = [self.countryModel titleOfContinentForIndex:indexPath.section];
+    cell.textLabel.text = [self.countryModel getNameOfCountryForContinent: continent
+                                                                  atIndex: indexPath.row];
+    
+    
+    cell.detailTextLabel.text = [self.countryModel getNameOfCapitalForContinent:continent
+                                                                        atIndex:indexPath.row];
     
     return cell;
 }
