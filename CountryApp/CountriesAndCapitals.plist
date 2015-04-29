@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>continent</key>
+		<string>Europe</string>
+		<key>country</key>
+		<string>Ukraine</string>
+		<key>capital</key>
+		<string>Kyiv</string>
+	</dict>
+	<dict>
+		<key>continent</key>
+		<string>Europe</string>
+		<key>country</key>
+		<string>Poland</string>
+		<key>capital</key>
+		<string>Warsaw</string>
+	</dict>
+	<dict>
+		<key>continent</key>
+		<string>Europe</string>
+		<key>country</key>
+		<string>Austria</string>
+		<key>capital</key>
+		<string>Vienna</string>
+	</dict>
+	<dict>
+		<key>continent</key>
+		<string>Asia</string>
+		<key>country</key>
+		<string>China</string>
+		<key>capital</key>
+		<string>Beijing</string>
+	</dict>
+	<dict>
+		<key>continent</key>
+		<string>Asia</string>
+		<key>country</key>
+		<string>South Korea</string>
+		<key>capital</key>
+		<string>Seoul</string>
+	</dict>
+	<dict>
+		<key>continent</key>
+		<string>Africa</string>
+		<key>country</key>
+		<string>Tunis</string>
+		<key>capital</key>
+		<string>Tunius</string>
+	</dict>
+	<dict>
+		<key>continent</key>
+		<string>North America</string>
+		<key>country</key>
+		<string>Canada</string>
+		<key>capital</key>
+		<string>Ottawa</string>
+	</dict>
+	<dict>
+		<key>continent</key>
+		<string>Africa</string>
+		<key>country</key>
+		<string>RSA</string>
+		<key>capital</key>
+		<string>Pretoria</string>
+		<key>population</key>
+		<integer>741651</integer>
+	</dict>
+</array>
+</plist>

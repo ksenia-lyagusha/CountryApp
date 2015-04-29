@@ -15,6 +15,8 @@
 		C5D459561AC8645D00E1C4EC /* CountryAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D459551AC8645D00E1C4EC /* CountryAppTests.m */; };
 		C5D459621AC8666C00E1C4EC /* CountryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D459601AC8666C00E1C4EC /* CountryViewController.m */; };
 		C5D459631AC8666C00E1C4EC /* CountryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5D459611AC8666C00E1C4EC /* CountryViewController.xib */; };
+		C5E70D881AEF6073007EB2D6 /* CountriesAndCapitals.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5E70D871AEF6073007EB2D6 /* CountriesAndCapitals.plist */; };
+		C5F67CFC1AF0ABA200D43780 /* CountryInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = C5F67CFB1AF0ABA200D43780 /* CountryInfo.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +45,9 @@
 		C5D4595F1AC8666C00E1C4EC /* CountryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountryViewController.h; sourceTree = "<group>"; };
 		C5D459601AC8666C00E1C4EC /* CountryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CountryViewController.m; sourceTree = "<group>"; wrapsLines = 0; };
 		C5D459611AC8666C00E1C4EC /* CountryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CountryViewController.xib; sourceTree = "<group>"; };
+		C5E70D871AEF6073007EB2D6 /* CountriesAndCapitals.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CountriesAndCapitals.plist; sourceTree = "<group>"; };
+		C5F67CFA1AF0ABA200D43780 /* CountryInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountryInfo.h; sourceTree = "<group>"; };
+		C5F67CFB1AF0ABA200D43780 /* CountryInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CountryInfo.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +93,8 @@
 				C5D4593E1AC8645D00E1C4EC /* AppDelegate.m */,
 				C569DF471ACC928A00312F3F /* CountryModel.h */,
 				C569DF481ACC928A00312F3F /* CountryModel.m */,
+				C5F67CFA1AF0ABA200D43780 /* CountryInfo.h */,
+				C5F67CFB1AF0ABA200D43780 /* CountryInfo.m */,
 				C5D4595F1AC8666C00E1C4EC /* CountryViewController.h */,
 				C5D459601AC8666C00E1C4EC /* CountryViewController.m */,
 				C5D459611AC8666C00E1C4EC /* CountryViewController.xib */,
@@ -102,6 +109,7 @@
 			isa = PBXGroup;
 			children = (
 				C5D4593A1AC8645D00E1C4EC /* Info.plist */,
+				C5E70D871AEF6073007EB2D6 /* CountriesAndCapitals.plist */,
 				C5D4593B1AC8645D00E1C4EC /* main.m */,
 			);
 			name = "Supporting Files";
@@ -204,6 +212,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5E70D881AEF6073007EB2D6 /* CountriesAndCapitals.plist in Resources */,
 				C5D4594A1AC8645D00E1C4EC /* LaunchScreen.xib in Resources */,
 				C5D459471AC8645D00E1C4EC /* Images.xcassets in Resources */,
 				C5D459631AC8666C00E1C4EC /* CountryViewController.xib in Resources */,
@@ -224,6 +233,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5F67CFC1AF0ABA200D43780 /* CountryInfo.m in Sources */,
 				C5D4593F1AC8645D00E1C4EC /* AppDelegate.m in Sources */,
 				C5D4593C1AC8645D00E1C4EC /* main.m in Sources */,
 				C569DF491ACC928A00312F3F /* CountryModel.m in Sources */,

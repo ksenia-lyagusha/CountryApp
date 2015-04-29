@@ -7,6 +7,8 @@
 //
 
 #import "CountryModel.h"
+#import <CoreGraphics/CoreGraphics.h>
+#import "CountryInfo.h"
 
 @interface CountryModel()
 @property NSArray *continents;
@@ -19,102 +21,104 @@
 {
     self = [super init];
     if (self) {
-        [self fillArray];
+        NSString *defaultPath = [[NSBundle mainBundle] pathForResource:@"CountriesAndCapitals.plist" ofType:nil];
+        self.continents = [NSArray arrayWithContentsOfFile:defaultPath];
+//            self.continents = allValues;
+        self.continents = [self fillArray];
     }
     return self;
+}  
+
+- (NSArray*)fillArray
+{
+    NSMutableArray *allValues = [NSMutableArray array];
+
+    for (NSDictionary *dict in self.continents){
+        CountryInfo *informationOfCountry = [[CountryInfo alloc] init];
+        informationOfCountry.continentTitle = [dict objectForKey:@"continent"];
+        informationOfCountry.countryTitle = [dict objectForKey:@"country"];
+        informationOfCountry.capitalTitle = [dict objectForKey:@"capital"];
+        informationOfCountry.population = [dict objectForKey:@"population"];
+        [allValues addObject:informationOfCountry];
+    }
+    return allValues;
 }
 
-- (void)fillArray
-{
-    self.continents = @[ @{@"continent" : @"Europe",
-                             @"country" : @"Ukraine",
-                             @"capital" : @"Kyiv"}
-                         ,
-                         @{@"continent" : @"Asia",
-                             @"country" : @"China",
-                             @"capital" : @"Beijing"}
-                         ,
-                         @{@"continent" : @"Europe",
-                             @"country" : @"Poland",
-                             @"capital" : @"Warsaw"}
-                         ,
-                         @{@"continent" : @"Europe",
-                             @"country" : @"Austria",
-                             @"capital" : @"Vienna"}
-                         ,
-                         @{@"continent" : @"Asia",
-                             @"country" : @"South Korea",
-                             @"capital" : @"Seoul"}
-                        ];
-}
+#pragma mark - API
 
 - (NSInteger)numberOfContinents
 {
-    NSMutableSet *continent = [NSMutableSet set];
-    for (NSDictionary *continentsTitle in self.continents) {
-       NSString *continentStr = [continentsTitle objectForKey:@"continent"];
-       [continent addObject:continentStr];
-    }
+    NSArray *continent = [self allContinents];
     return [continent count];
 }
 
 - (NSInteger)countOfCountriesInContinent:(NSString*)titleOfContinent
 {
-    NSInteger countOfCountries = 0;
-    for (NSDictionary *countryInfo in self.continents) {
-        if ([titleOfContinent isEqualToString:countryInfo[@"continent"]]) {
-            countOfCountries++;
-        }
-    }
+    NSInteger countOfCountries = [[self allCountriesInContinent:titleOfContinent] count];
     return countOfCountries;
 }
 
+
 - (NSString*)getNameOfCountryForContinent:(NSString*)titleOfContinent atIndex:(NSInteger)index
 {
-    NSInteger count = 0;
-    NSString *countryTitle;
-    for (NSDictionary *countryInfo in self.continents) {
-        if ([titleOfContinent isEqualToString:[countryInfo objectForKey:@"continent"]]) {
-            if (index == count) {
-                countryTitle = [countryInfo objectForKey:@"country"];
-            }
-            count++;
-        }
-    }
-    return countryTitle;
+    NSArray *countryArray = [self allCountriesInContinent:titleOfContinent];
+    countryArray = [countryArray sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
+    return [countryArray objectAtIndex:index];
 }
 
 - (NSString*)getNameOfCapitalForContinent:(NSString*)titleOfContinent atIndex:(NSInteger)index
 {
-    NSInteger currentElem = 0;
-    NSString *capitalTitle;
-    for (NSDictionary *countryInfo in self.continents) {
-        if ([titleOfContinent isEqualToString:[countryInfo objectForKey:@"continent"]]) {
-            if (index == currentElem) {
-                capitalTitle = [countryInfo objectForKey:@"capital"];
-            }
-            currentElem++;
+    NSString *country = [self getNameOfCountryForContinent:titleOfContinent atIndex:index];
+    NSString *capital;
+    for (CountryInfo *countryInfo in self.continents) {
+        if ([country isEqualToString:countryInfo.countryTitle]){
+            capital = countryInfo.capitalTitle;
+            break;
         }
     }
-    return capitalTitle;
-
+    return capital;
 }
 
 - (NSString*)titleOfContinentForIndex:(NSInteger)index
 {
-    NSMutableSet *continentSet = [NSMutableSet set];
-    for (NSDictionary *countryInfo in self.continents) {
-        [continentSet addObject:[countryInfo objectForKey:@"continent"]];
-    }
-    NSArray *continentArr = [continentSet allObjects];
-    
-    return [continentArr objectAtIndex:index];
+    NSArray *continent  = [[self allContinents] sortedArrayUsingSelector:@selector(compare:)]/*reverseObjectEnumerator] allObjects]*/;
+    return [continent objectAtIndex:index];
 }
 
+- (NSNumber*)getPopulationOfCapitalForContinent:(NSString*)titleOfContinent atIndex:(NSInteger)index
+{
+    NSString *country = [self getNameOfCountryForContinent:titleOfContinent atIndex:index];
+    NSNumber *populationInCapital;
+    for (CountryInfo *countryInfo in self.continents) {
+        if ([country isEqualToString:countryInfo.countryTitle]){
+            populationInCapital = countryInfo.population;
+        }
+    }
+    return populationInCapital;
+}
 
+#pragma mark - Private methods
 
+- (NSArray*)allCountriesInContinent:(NSString*)titleOfContinent
+{
+    NSMutableArray *countryArray = [NSMutableArray array];
+    
+    for (CountryInfo *countryInfo in self.continents) {
+        if ([titleOfContinent isEqualToString:countryInfo.continentTitle]) {
+            [countryArray addObject:countryInfo.countryTitle];
+        }
+    }
+    return countryArray;
+}
 
-
-
+- (NSArray*)allContinents
+{
+    NSMutableSet *continentSet = [NSMutableSet set];
+    for (CountryInfo *countryInfo in self.continents) {
+        [continentSet addObject:countryInfo.continentTitle];
+    }
+    NSArray *continentArr = [continentSet allObjects];
+    return continentArr;
+}
 
 @end

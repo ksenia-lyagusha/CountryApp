@@ -52,10 +52,10 @@
     cell.textLabel.text = [self.countryModel getNameOfCountryForContinent: continent
                                                                   atIndex: indexPath.row];
     
-    
-    cell.detailTextLabel.text = [self.countryModel getNameOfCapitalForContinent:continent
-                                                                        atIndex:indexPath.row];
-    
+    NSString *capital = [self.countryModel getNameOfCapitalForContinent:continent
+                                                                atIndex:indexPath.row];
+    NSNumber *population = [self.countryModel getPopulationOfCapitalForContinent:continent atIndex:indexPath.row];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ (%@)",capital, population];
     return cell;
 }
 
