@@ -8,7 +8,6 @@
 
 #import "CountryModel.h"
 #import <CoreGraphics/CoreGraphics.h>
-#import "CountryInfo.h"
 
 @interface CountryModel()
 @property NSArray *continents;
@@ -23,7 +22,6 @@
     if (self) {
         NSString *defaultPath = [[NSBundle mainBundle] pathForResource:@"CountriesAndCapitals.plist" ofType:nil];
         self.continents = [NSArray arrayWithContentsOfFile:defaultPath];
-//            self.continents = allValues;
         self.continents = [self fillArray];
     }
     return self;
@@ -58,26 +56,19 @@
     return countOfCountries;
 }
 
-
-- (NSString*)getNameOfCountryForContinent:(NSString*)titleOfContinent atIndex:(NSInteger)index
+- (CountryInfo*)countryInfoObjectAtContinent:(NSString*)titleOfContinent atIndex:(NSInteger)index
 {
-    NSArray *countryArray = [self allCountriesInContinent:titleOfContinent];
-    countryArray = [countryArray sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
-    return [countryArray objectAtIndex:index];
-}
-
-- (NSString*)getNameOfCapitalForContinent:(NSString*)titleOfContinent atIndex:(NSInteger)index
-{
-    NSString *country = [self getNameOfCountryForContinent:titleOfContinent atIndex:index];
-    NSString *capital;
-    for (CountryInfo *countryInfo in self.continents) {
-        if ([country isEqualToString:countryInfo.countryTitle]){
-            capital = countryInfo.capitalTitle;
-            break;
+    NSArray *arr = [self allCountriesInContinent:titleOfContinent];
+    arr = [arr sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
+    for (CountryInfo *infoOfCountry in self.continents){
+        if ([infoOfCountry.countryTitle isEqualToString:[arr objectAtIndex:index]]) {
+            return infoOfCountry;
+           
         }
     }
-    return capital;
+    return nil;
 }
+
 
 - (NSString*)titleOfContinentForIndex:(NSInteger)index
 {
@@ -85,17 +76,6 @@
     return [continent objectAtIndex:index];
 }
 
-- (NSNumber*)getPopulationOfCapitalForContinent:(NSString*)titleOfContinent atIndex:(NSInteger)index
-{
-    NSString *country = [self getNameOfCountryForContinent:titleOfContinent atIndex:index];
-    NSNumber *populationInCapital;
-    for (CountryInfo *countryInfo in self.continents) {
-        if ([country isEqualToString:countryInfo.countryTitle]){
-            populationInCapital = countryInfo.population;
-        }
-    }
-    return populationInCapital;
-}
 
 #pragma mark - Private methods
 
@@ -122,3 +102,4 @@
 }
 
 @end
+

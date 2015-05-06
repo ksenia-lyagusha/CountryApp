@@ -11,6 +11,7 @@
 
 @interface CountryViewController ()
 @property CountryModel *countryModel;
+
 @end
 
 @implementation CountryViewController
@@ -19,7 +20,8 @@
 {
     [super viewDidLoad];
     self.title = @"Countries";
-    self.countryModel = [[CountryModel alloc] init] ;
+    self.countryModel = [[CountryModel alloc] init];
+
 }
 
 #pragma mark - DataSource
@@ -49,13 +51,9 @@
     }
 //    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     NSString *continent = [self.countryModel titleOfContinentForIndex:indexPath.section];
-    cell.textLabel.text = [self.countryModel getNameOfCountryForContinent: continent
-                                                                  atIndex: indexPath.row];
-    
-    NSString *capital = [self.countryModel getNameOfCapitalForContinent:continent
-                                                                atIndex:indexPath.row];
-    NSNumber *population = [self.countryModel getPopulationOfCapitalForContinent:continent atIndex:indexPath.row];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ (%@)",capital, population];
+    CountryInfo *obj = [self.countryModel countryInfoObjectAtContinent:continent atIndex:indexPath.row];
+    cell.textLabel.text = obj.countryTitle;
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ (%@)", obj.capitalTitle, obj.population];
     return cell;
 }
 
@@ -97,6 +95,7 @@
 {
     return 50;
 }
+#pragma mark - Helpers
 
 - (void)showAlert:(NSString*)country
 {

@@ -8,14 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-
+#import "CountryInfo.h"
 @interface CountryModel : NSObject
 
-- (NSInteger)countOfCountriesInContinent:(NSString*)continent;
-- (NSNumber*)getPopulationOfCapitalForContinent:(NSString*)titleOfContinent atIndex:(NSInteger)index;
-- (NSString*)getNameOfCountryForContinent:(NSString*)continent atIndex:(NSInteger)index;
-- (NSString*)getNameOfCapitalForContinent:(NSString*)continent atIndex:(NSInteger)index;
-- (NSString*)titleOfContinentForIndex:(NSInteger)index;
 - (NSInteger)numberOfContinents;
+- (NSString*)titleOfContinentForIndex:(NSInteger)index;
+- (NSInteger)countOfCountriesInContinent:(NSString*)continent;
+- (CountryInfo*)countryInfoObjectAtContinent:(NSString*)continent atIndex:(NSInteger)index;
 
 @end
