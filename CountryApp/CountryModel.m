@@ -59,14 +59,12 @@
 - (CountryInfo*)countryInfoObjectAtContinent:(NSString*)titleOfContinent atIndex:(NSInteger)index
 {
     NSArray *arr = [self allCountriesInContinent:titleOfContinent];
-    arr = [arr sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
-    for (CountryInfo *infoOfCountry in self.continents){
-        if ([infoOfCountry.countryTitle isEqualToString:[arr objectAtIndex:index]]) {
-            return infoOfCountry;
-           
-        }
-    }
-    return nil;
+    
+    arr = [arr sortedArrayUsingComparator:^NSComparisonResult(CountryInfo *obj1, CountryInfo *obj2) {
+        return [obj1.countryTitle compare:obj2.countryTitle];
+    }];
+    
+    return [arr objectAtIndex:index];
 }
 
 
@@ -85,7 +83,7 @@
     
     for (CountryInfo *countryInfo in self.continents) {
         if ([titleOfContinent isEqualToString:countryInfo.continentTitle]) {
-            [countryArray addObject:countryInfo.countryTitle];
+            [countryArray addObject:countryInfo];
         }
     }
     return countryArray;
