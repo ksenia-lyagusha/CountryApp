@@ -30,18 +30,15 @@
 - (NSArray*)fillArray
 {
     NSMutableArray *allValues = [NSMutableArray array];
-
-    for (NSDictionary *dict in self.continents){
-        CountryInfo *informationOfCountry = [[CountryInfo alloc] init];
-        informationOfCountry.continentTitle = [dict objectForKey:@"continent"];
-        informationOfCountry.countryTitle = [dict objectForKey:@"country"];
-        informationOfCountry.capitalTitle = [dict objectForKey:@"capital"];
-        informationOfCountry.population = [dict objectForKey:@"population"];
-        [allValues addObject:informationOfCountry];
+    for (NSDictionary *informationOfCountry in self.continents) {
+        CountryInfo *obj = [CountryInfo countryInfoWithContinent:informationOfCountry[@"continent"]
+                                                         country:informationOfCountry[@"country"]
+                                                         capital:informationOfCountry[@"capital"]
+                                                      population:informationOfCountry[@"population"]];
+        [allValues addObject:obj];
     }
     return allValues;
 }
-
 #pragma mark - API
 
 - (NSInteger)numberOfContinents

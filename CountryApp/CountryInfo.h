@@ -14,4 +14,7 @@
 @property NSString *capitalTitle;
 @property NSNumber *population;
 
++ (CountryInfo*)countryInfoWithContinent:(NSString*)continent country:(NSString*)country capital:(NSString*)capital population:(NSNumber*)population;
+- (NSString*)additionalInfo;
+
 @end

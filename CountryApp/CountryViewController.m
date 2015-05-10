@@ -53,7 +53,7 @@
     NSString *continent = [self.countryModel titleOfContinentForIndex:indexPath.section];
     CountryInfo *obj = [self.countryModel countryInfoObjectAtContinent:continent atIndex:indexPath.row];
     cell.textLabel.text = obj.countryTitle;
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ (%@)", obj.capitalTitle, obj.population];
+    cell.detailTextLabel.text = [obj additionalInfo];
     return cell;
 }
 
@@ -99,7 +99,7 @@
 
 - (void)showAlert:(NSString*)country
 {
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"CountryApp"
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"CountryApp"
                                                                     message:[NSString stringWithFormat:@"You selected %@",country]
                                                              preferredStyle:UIAlertControllerStyleAlert];
     
