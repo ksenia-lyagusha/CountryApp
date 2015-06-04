@@ -14,6 +14,6 @@
 - (NSInteger)numberOfContinents;
 - (NSString*)titleOfContinentForIndex:(NSInteger)index;
 - (NSInteger)countOfCountriesInContinent:(NSString*)continent;
-- (CountryInfo*)countryInfoObjectAtContinent:(NSString*)continent atIndex:(NSInteger)index;
-
+- (CountryInfo*)countryInfoObj:(NSIndexPath*)indexPath;
+- (void)deleteObjectFromList:(NSIndexPath*)indexPath;
 @end

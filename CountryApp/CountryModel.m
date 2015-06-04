@@ -10,7 +10,7 @@
 #import <CoreGraphics/CoreGraphics.h>
 
 @interface CountryModel()
-@property NSArray *continents;
+@property NSMutableArray *continents;
 
 @end
 
@@ -21,13 +21,15 @@
     self = [super init];
     if (self) {
         NSString *defaultPath = [[NSBundle mainBundle] pathForResource:@"CountriesAndCapitals.plist" ofType:nil];
-        self.continents = [NSArray arrayWithContentsOfFile:defaultPath];
+        self.continents = [NSMutableArray arrayWithContentsOfFile:defaultPath];
+        
         self.continents = [self fillArray];
+        
     }
     return self;
 }  
 
-- (NSArray*)fillArray
+- (NSMutableArray*)fillArray
 {
     NSMutableArray *allValues = [NSMutableArray array];
     for (NSDictionary *informationOfCountry in self.continents) {
@@ -37,7 +39,7 @@
                                                       population:informationOfCountry[@"population"]];
         [allValues addObject:obj];
     }
-    return allValues;
+    return  allValues;
 }
 #pragma mark - API
 
@@ -53,24 +55,29 @@
     return countOfCountries;
 }
 
-- (CountryInfo*)countryInfoObjectAtContinent:(NSString*)titleOfContinent atIndex:(NSInteger)index
-{
-    NSArray *arr = [self allCountriesInContinent:titleOfContinent];
-    
-    arr = [arr sortedArrayUsingComparator:^NSComparisonResult(CountryInfo *obj1, CountryInfo *obj2) {
-        return [obj1.countryTitle compare:obj2.countryTitle];
-    }];
-    
-    return [arr objectAtIndex:index];
-}
-
-
 - (NSString*)titleOfContinentForIndex:(NSInteger)index
 {
     NSArray *continent  = [[self allContinents] sortedArrayUsingSelector:@selector(compare:)]/*reverseObjectEnumerator] allObjects]*/;
     return [continent objectAtIndex:index];
 }
 
+- (CountryInfo*)countryInfoObj:(NSIndexPath*)indexPath
+{
+    NSString *str = [self titleOfContinentForIndex:indexPath.section];
+    NSArray *arr = [self allCountriesInContinent:str];
+    
+    arr = [arr sortedArrayUsingComparator:^NSComparisonResult(CountryInfo *obj1, CountryInfo *obj2) {
+        return [obj1.countryTitle compare:obj2.countryTitle];
+    }];
+    
+    return [arr objectAtIndex:indexPath.row];
+}
+
+- (void)deleteObjectFromList:(NSIndexPath*)indexPath
+{
+    CountryInfo *obj = [self countryInfoObj:indexPath];
+    [self.continents removeObject:obj];
+}
 
 #pragma mark - Private methods
 

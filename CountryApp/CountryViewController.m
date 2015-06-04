@@ -8,10 +8,13 @@
 
 #import "CountryViewController.h"
 #import "CountryModel.h"
+#import "DetailInfoController.h"
+#import "AddInfoController.h"
 
 @interface CountryViewController ()
-@property CountryModel *countryModel;
 
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property CountryModel *countryModel;
 @end
 
 @implementation CountryViewController
@@ -21,7 +24,14 @@
     [super viewDidLoad];
     self.title = @"Countries";
     self.countryModel = [[CountryModel alloc] init];
+    self.navigationItem.leftBarButtonItem = self.editButtonItem;
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStylePlain target:self action:@selector(createNewObject)];
+}
 
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated
+{
+    [super setEditing:editing animated:animated];
+    [self.tableView setEditing:editing animated:YES];
 }
 
 #pragma mark - DataSource
@@ -50,51 +60,52 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"identifier"];
     }
 //    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    NSString *continent = [self.countryModel titleOfContinentForIndex:indexPath.section];
-    CountryInfo *obj = [self.countryModel countryInfoObjectAtContinent:continent atIndex:indexPath.row];
+    CountryInfo *obj = [self.countryModel countryInfoObj:indexPath];
     cell.textLabel.text = obj.countryTitle;
     cell.detailTextLabel.text = [obj additionalInfo];
+
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        [self.tableView beginUpdates];
+         NSString *continent = [self.countryModel titleOfContinentForIndex:indexPath.section];
+        [self.countryModel deleteObjectFromList:indexPath];
+        [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    
+        if ([self.countryModel countOfCountriesInContinent:continent] == 0) {
+            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
+        }
+
+        [self.tableView endUpdates];
+    }
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+}
+ 
 #pragma mark - Delegate
 
 - (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 //    [self showAlert:self.countryModel.countries[indexPath.row]];
-    
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    
-    UITableViewCellAccessoryType accessory;
-    switch (indexPath.row) {
-        case 0:
-            accessory = UITableViewCellAccessoryDetailButton;
-            break;
-        case 1:
-            accessory = UITableViewCellAccessoryDetailDisclosureButton;
-            break;
-        case 2:
-            accessory = UITableViewCellAccessoryDisclosureIndicator;
-            break;
-        case 3:
-            accessory = UITableViewCellAccessoryCheckmark;
-            break;
-        default:
-            break;
-    }
-    if (cell.accessoryType == UITableViewCellAccessoryNone){
-        cell.accessoryType = accessory;
-    } else {
-        cell.accessoryType = UITableViewCellAccessoryNone;
-    }
-
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    DetailInfoController *detailInfo = [[DetailInfoController alloc] init];
+    [self.navigationController pushViewController:detailInfo animated:YES];// detailViewController
+    detailInfo.obj = [self.countryModel countryInfoObj:indexPath];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 50;
 }
+
 #pragma mark - Helpers
 
 - (void)showAlert:(NSString*)country
@@ -110,6 +121,11 @@
     [self presentViewController:alert animated:YES completion:nil];
 }
 
-
+- (void)createNewObject
+{
+    AddInfoController *addInfoController = [[AddInfoController alloc] init];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:addInfoController];
+    [self presentViewController:navigationController animated:YES completion:nil];
+}
 
 @end
