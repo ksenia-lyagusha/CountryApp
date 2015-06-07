@@ -77,6 +77,12 @@
 {
     CountryInfo *obj = [self countryInfoObj:indexPath];
     [self.continents removeObject:obj];
+    
+}
+
+- (void)addNewObject:(CountryInfo*)countryInfo
+{
+    [self.continents addObject:countryInfo];
 }
 
 #pragma mark - Private methods

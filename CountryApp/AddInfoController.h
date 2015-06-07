@@ -8,7 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-
+#import "CountryModel.h"
+#import "CountryViewController.h"
 
 @interface AddInfoController : UIViewController <UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
 
@@ -16,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *countryField;
 @property (weak, nonatomic) IBOutlet UITextField *capitalField;
 @property (weak, nonatomic) IBOutlet UITextField *populationField;
-
+@property CountryModel *countryModel;
 @property (strong, nonatomic) NSArray *dataSource;
+@property CountryViewController *viewContr;
 @end

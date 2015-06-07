@@ -12,9 +12,8 @@
 #import "AddInfoController.h"
 
 @interface CountryViewController ()
-
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property CountryModel *countryModel;
+
 @end
 
 @implementation CountryViewController
@@ -65,23 +64,23 @@
     cell.detailTextLabel.text = [obj additionalInfo];
 
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-
+    
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [self.tableView beginUpdates];
+        [tableView beginUpdates];
          NSString *continent = [self.countryModel titleOfContinentForIndex:indexPath.section];
         [self.countryModel deleteObjectFromList:indexPath];
-        [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
     
         if ([self.countryModel countOfCountriesInContinent:continent] == 0) {
-            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView deleteSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
         }
 
-        [self.tableView endUpdates];
+        [tableView endUpdates];
     }
 }
 
@@ -126,6 +125,8 @@
     AddInfoController *addInfoController = [[AddInfoController alloc] init];
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:addInfoController];
     [self presentViewController:navigationController animated:YES completion:nil];
+    addInfoController.countryModel = self.countryModel;
+    addInfoController.viewContr = self;
 }
 
 @end

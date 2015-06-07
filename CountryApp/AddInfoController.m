@@ -7,8 +7,10 @@
 //
 
 #import "AddInfoController.h"
+#import "CountryInfo.h"
 
 @interface AddInfoController()
+
 @end
 
 @implementation AddInfoController
@@ -17,8 +19,8 @@
 {
     [super viewDidLoad];
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStylePlain target:self action:@selector(backToViewController)];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(backToViewController)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Save up" style:UIBarButtonItemStylePlain target:self action:@selector(saveAndBackToViewController:)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(saveAndBackToViewController:)];
     self.title = @"Creating new object";
     self.dataSource = [NSArray arrayWithObjects:
                        @"Africa",
@@ -32,6 +34,22 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [self.countryField becomeFirstResponder];
+}
+
+- (void)saveAndBackToViewController:(UIBarButtonItem*)barButtonItem
+{
+    if (barButtonItem == self.navigationItem.rightBarButtonItem) {
+        CountryInfo *allValues = [[CountryInfo alloc] init];
+        NSInteger index = [self.pickerView selectedRowInComponent:0];
+        allValues.continentTitle  = [self.dataSource objectAtIndex:index];
+        allValues.countryTitle = self.countryField.text;
+        allValues.capitalTitle = self.capitalField.text;
+        allValues.population = @([self.populationField.text intValue]);
+        [self.countryModel addNewObject:allValues];
+        [self.viewContr.tableView reloadData];
+    }
+    [self dismissViewControllerAnimated:YES completion:nil];
+
 }
 
 - (void)backToViewController
@@ -62,8 +80,6 @@
     } else {
         [textField resignFirstResponder];
     }
-    
-//    self.populationField.keyboardType
     return YES;
 }
 
