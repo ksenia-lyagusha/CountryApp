@@ -41,6 +41,16 @@
     }
     return  allValues;
 }
+
++ (CountryModel*)sharedInstance                     /*singleTon*/
+{
+    static CountryModel *_sharedInstance = nil;
+    static dispatch_once_t oncePredicate;
+    dispatch_once(&oncePredicate, ^{
+        _sharedInstance = [[CountryModel alloc] init];
+    });
+    return _sharedInstance;
+}
 #pragma mark - API
 
 - (NSInteger)numberOfContinents

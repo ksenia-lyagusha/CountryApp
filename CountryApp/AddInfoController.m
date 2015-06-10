@@ -8,8 +8,14 @@
 
 #import "AddInfoController.h"
 #import "CountryInfo.h"
+#import "CountryModel.h"
 
 @interface AddInfoController()
+@property (weak, nonatomic) IBOutlet UIPickerView *pickerView;
+@property (weak, nonatomic) IBOutlet UITextField *countryField;
+@property (weak, nonatomic) IBOutlet UITextField *capitalField;
+@property (weak, nonatomic) IBOutlet UITextField *populationField;
+@property (strong, nonatomic) NSArray *dataSource;
 
 @end
 
@@ -45,8 +51,7 @@
         allValues.countryTitle = self.countryField.text;
         allValues.capitalTitle = self.capitalField.text;
         allValues.population = @([self.populationField.text intValue]);
-        [self.countryModel addNewObject:allValues];
-        [self.viewContr.tableView reloadData];
+        [[CountryModel sharedInstance] addNewObject:allValues];
     }
     [self dismissViewControllerAnimated:YES completion:nil];
 

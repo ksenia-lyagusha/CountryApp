@@ -11,6 +11,7 @@
 #import "CountryInfo.h"
 @interface CountryModel : NSObject
 
++ (CountryModel*)sharedInstance;
 - (NSInteger)numberOfContinents;
 - (NSString*)titleOfContinentForIndex:(NSInteger)index;
 - (NSInteger)countOfCountriesInContinent:(NSString*)continent;

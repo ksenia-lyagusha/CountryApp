@@ -9,6 +9,10 @@
 #import "DetailInfoController.h"
 
 @interface DetailInfoController ()
+@property (weak, nonatomic) IBOutlet UILabel *continent;
+@property (weak, nonatomic) IBOutlet UILabel *country;
+@property (weak, nonatomic) IBOutlet UILabel *capital;
+@property (weak, nonatomic) IBOutlet UILabel *population;
 
 @end
 

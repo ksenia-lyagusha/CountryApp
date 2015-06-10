@@ -12,7 +12,8 @@
 #import "AddInfoController.h"
 
 @interface CountryViewController ()
-@property CountryModel *countryModel;
+@property (strong, nonatomic) CountryModel *countryModel;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end
 
@@ -22,9 +23,15 @@
 {
     [super viewDidLoad];
     self.title = @"Countries";
-    self.countryModel = [[CountryModel alloc] init];
+    self.countryModel = [CountryModel sharedInstance];
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStylePlain target:self action:@selector(createNewObject)];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.tableView reloadData];
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated
@@ -125,8 +132,7 @@
     AddInfoController *addInfoController = [[AddInfoController alloc] init];
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:addInfoController];
     [self presentViewController:navigationController animated:YES completion:nil];
-    addInfoController.countryModel = self.countryModel;
-    addInfoController.viewContr = self;
+
 }
 
 @end

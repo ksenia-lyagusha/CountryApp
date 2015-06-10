@@ -9,10 +9,6 @@
                 <outlet property="capital" destination="mL7-em-2pM" id="cuh-Ak-Pob"/>
                 <outlet property="continent" destination="17Y-2v-F4u" id="80J-jG-DeC"/>
                 <outlet property="country" destination="PCI-Ob-647" id="glc-D6-8mE"/>
-                <outlet property="label1" destination="BfI-nc-Z4m" id="7TU-J5-mqP"/>
-                <outlet property="label2" destination="SmK-w9-GI3" id="Omf-kD-qhT"/>
-                <outlet property="label3" destination="XEj-fR-jV9" id="eT2-vv-ziE"/>
-                <outlet property="label4" destination="vV9-zj-hKL" id="g1s-Yj-esz"/>
                 <outlet property="population" destination="iIX-qD-eqk" id="iyi-uK-qOA"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -46,6 +42,12 @@
                     <color key="textColor" red="0.075210989930724947" green="0.17891460665247017" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Country:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SmK-w9-GI3" colorLabel="IBBuiltInLabel-Blue">
+                    <rect key="frame" x="31" y="175" width="72" height="21"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                    <color key="textColor" red="0.075210989930724947" green="0.17891460665247017" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Capital:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XEj-fR-jV9" colorLabel="IBBuiltInLabel-Blue">
                     <rect key="frame" x="31" y="204" width="64" height="21"/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
@@ -54,12 +56,6 @@
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Population:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vV9-zj-hKL" colorLabel="IBBuiltInLabel-Blue">
                     <rect key="frame" x="31" y="233" width="96" height="27"/>
-                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
-                    <color key="textColor" red="0.075210989930724947" green="0.17891460665247017" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Country:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SmK-w9-GI3" colorLabel="IBBuiltInLabel-Blue">
-                    <rect key="frame" x="31" y="175" width="72" height="21"/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                     <color key="textColor" red="0.075210989930724947" green="0.17891460665247017" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
