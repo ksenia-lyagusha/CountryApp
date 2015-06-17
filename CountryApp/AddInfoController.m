@@ -62,6 +62,20 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (void)showAlert:(NSString*)country
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"CountryApp"
+                                                                   message:[NSString stringWithFormat:@"You selected %@",country]
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Cheel out"
+                                                       style:UIAlertActionStyleDefault
+                                                     handler:nil];
+    [alert addAction:okAction];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+
 #pragma mark - TextFieldDelegate
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
@@ -86,6 +100,14 @@
         [textField resignFirstResponder];
     }
     return YES;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    if ([self.countryField.text isEqualToString:@""])
+    {
+        
+    }
 }
 
 #pragma mark - UIPickerViewDataSource
