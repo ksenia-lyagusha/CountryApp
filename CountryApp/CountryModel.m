@@ -9,6 +9,8 @@
 #import "CountryModel.h"
 #import <CoreGraphics/CoreGraphics.h>
 
+#define kAllCountries @"AllCountries"
+#define kIsEnter @"Counter"
 @interface CountryModel()
 @property NSMutableArray *continents;
 
@@ -25,9 +27,11 @@
         
         self.continents = [self fillArray];
         
+        [self readingAndDecoding];
+
     }
     return self;
-}  
+}
 
 - (NSMutableArray*)fillArray
 {
@@ -87,12 +91,13 @@
 {
     CountryInfo *obj = [self countryInfoObj:indexPath];
     [self.continents removeObject:obj];
-    
+    [self savingAndEncoding];
 }
 
 - (void)addNewObject:(CountryInfo*)countryInfo
 {
     [self.continents addObject:countryInfo];
+    [self savingAndEncoding];
 }
 
 #pragma mark - Private methods
@@ -117,6 +122,24 @@
     }
     NSArray *continentArr = [continentSet allObjects];
     return continentArr;
+}
+- (void)readingAndDecoding
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    BOOL isSecond = [defaults boolForKey:kIsEnter];
+    if (isSecond) {
+        NSData *obj = [defaults dataForKey:kAllCountries];
+        self.continents = [NSKeyedUnarchiver unarchiveObjectWithData:obj];
+        
+    }
+}
+
+
+- (void)savingAndEncoding
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:[NSKeyedArchiver archivedDataWithRootObject:self.self.continents] forKey:kAllCountries];
+    [defaults setBool:YES forKey:kIsEnter];
 }
 
 @end
