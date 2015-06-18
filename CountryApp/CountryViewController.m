@@ -100,7 +100,7 @@
 
 - (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    [self showAlert:self.countryModel.countries[indexPath.row]];
+//    [self showAlert:[self.countryModel countryInfoObj:indexPath].countryTitle];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     DetailInfoController *detailInfo = [[DetailInfoController alloc] init];
     [self.navigationController pushViewController:detailInfo animated:YES];// detailViewController

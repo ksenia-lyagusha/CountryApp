@@ -26,7 +26,7 @@
     [super viewDidLoad];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Save up" style:UIBarButtonItemStylePlain target:self action:@selector(saveAndBackToViewController:)];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(saveAndBackToViewController:)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(backToViewController)];
     self.title = @"Creating new object";
     self.dataSource = [NSArray arrayWithObjects:
                        @"Africa",
@@ -44,16 +44,22 @@
 
 - (void)saveAndBackToViewController:(UIBarButtonItem*)barButtonItem
 {
-    if (barButtonItem == self.navigationItem.rightBarButtonItem) {
-        CountryInfo *allValues = [[CountryInfo alloc] init];
+    CountryInfo *allValues = [[CountryInfo alloc] init];
+    
+    if ([self.countryField.text isEqualToString:@""] || [self.capitalField.text isEqualToString:@""] || [self.populationField.text isEqualToString:@""]) {
+        [self showAlert:allValues];
+        
+    } else if (barButtonItem == self.navigationItem.rightBarButtonItem) {
         NSInteger index = [self.pickerView selectedRowInComponent:0];
         allValues.continentTitle  = [self.dataSource objectAtIndex:index];
         allValues.countryTitle = self.countryField.text;
         allValues.capitalTitle = self.capitalField.text;
         allValues.population = @([self.populationField.text intValue]);
         [[CountryModel sharedInstance] addNewObject:allValues];
+        [self dismissViewControllerAnimated:YES completion:nil];
     }
-    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    
 
 }
 
@@ -62,13 +68,13 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)showAlert:(NSString*)country
+- (void)showAlert:(CountryInfo*)countryInfo
 {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"CountryApp"
-                                                                   message:[NSString stringWithFormat:@"You selected %@",country]
+                                                                   message:@"Sorry, but you have some empty fields. Please, fill them in"
                                                             preferredStyle:UIAlertControllerStyleAlert];
     
-    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Cheel out"
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK"
                                                        style:UIAlertActionStyleDefault
                                                      handler:nil];
     [alert addAction:okAction];
@@ -77,6 +83,7 @@
 
 
 #pragma mark - TextFieldDelegate
+
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     if (textField == self.populationField)
@@ -100,14 +107,6 @@
         [textField resignFirstResponder];
     }
     return YES;
-}
-
-- (void)textFieldDidEndEditing:(UITextField *)textField
-{
-    if ([self.countryField.text isEqualToString:@""])
-    {
-        
-    }
 }
 
 #pragma mark - UIPickerViewDataSource
