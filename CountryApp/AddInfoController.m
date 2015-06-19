@@ -16,7 +16,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *capitalField;
 @property (weak, nonatomic) IBOutlet UITextField *populationField;
 @property (strong, nonatomic) NSArray *dataSource;
-
+@property NSString *string;
 @end
 
 @implementation AddInfoController
@@ -26,7 +26,7 @@
     [super viewDidLoad];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Save up" style:UIBarButtonItemStylePlain target:self action:@selector(saveAndBackToViewController:)];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(backToViewController)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(saveAndBackToViewController:)];
     self.title = @"Creating new object";
     self.dataSource = [NSArray arrayWithObjects:
                        @"Africa",
@@ -44,13 +44,27 @@
 
 - (void)saveAndBackToViewController:(UIBarButtonItem*)barButtonItem
 {
-    CountryInfo *allValues = [[CountryInfo alloc] init];
-    
-    if ([self.countryField.text isEqualToString:@""] || [self.capitalField.text isEqualToString:@""] || [self.populationField.text isEqualToString:@""]) {
-        [self showAlert:allValues];
+    if (barButtonItem == self.navigationItem.leftBarButtonItem){
+        [self dismissViewControllerAnimated:YES completion:nil];
+        
+    } else if ([self.countryField.text isEqualToString:@""] || [self.capitalField.text isEqualToString:@""] || [self.populationField.text isEqualToString:@""]) {
+        
+        NSMutableArray *array = [NSMutableArray arrayWithObjects:self.countryField, self.capitalField, self.populationField, nil];
+        
+        NSMutableArray *otherArray = [NSMutableArray array];
+        for (UITextField *textField in array) {
+            if ([textField.text isEqualToString:@""]) {
+                [otherArray addObject:textField.placeholder];
+                self.string = [otherArray componentsJoinedByString:@", "];
+                self.string = self.string.lowercaseString;
+            }
+        }
+        self.string = [self.string stringByReplacingOccurrencesOfString:@"new " withString:@""];
+        [self showAlert:self.string];
         
     } else if (barButtonItem == self.navigationItem.rightBarButtonItem) {
         NSInteger index = [self.pickerView selectedRowInComponent:0];
+        CountryInfo *allValues = [[CountryInfo alloc] init];
         allValues.continentTitle  = [self.dataSource objectAtIndex:index];
         allValues.countryTitle = self.countryField.text;
         allValues.capitalTitle = self.capitalField.text;
@@ -58,20 +72,12 @@
         [[CountryModel sharedInstance] addNewObject:allValues];
         [self dismissViewControllerAnimated:YES completion:nil];
     }
-    
-    
-
 }
 
-- (void)backToViewController
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)showAlert:(CountryInfo*)countryInfo
+- (void)showAlert:(NSString*)srting
 {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"CountryApp"
-                                                                   message:@"Sorry, but you have some empty fields. Please, fill them in"
+                                                                   message:[NSString stringWithFormat: @"Sorry, but you have %@ empty fields. Please, fill them in", self.string]
                                                             preferredStyle:UIAlertControllerStyleAlert];
     
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK"
