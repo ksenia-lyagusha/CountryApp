@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface CountryInfo : NSObject <NSCoding>
+@interface CountryInfo : NSObject //<NSCoding>
 @property NSString *continentTitle;
 @property NSString *countryTitle;
 @property NSString *capitalTitle;

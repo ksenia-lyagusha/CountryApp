@@ -7,16 +7,17 @@
 //
 
 #import "AddInfoController.h"
-#import "CountryInfo.h"
-#import "CountryModel.h"
+#import "Country.h"
+#import <MagicalRecord.h>
 
 @interface AddInfoController()
+
 @property (weak, nonatomic) IBOutlet UIPickerView *pickerView;
 @property (weak, nonatomic) IBOutlet UITextField *countryField;
 @property (weak, nonatomic) IBOutlet UITextField *capitalField;
 @property (weak, nonatomic) IBOutlet UITextField *populationField;
 @property (strong, nonatomic) NSArray *dataSource;
-@property NSString *string;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @end
 
 @implementation AddInfoController
@@ -27,6 +28,7 @@
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Save up" style:UIBarButtonItemStylePlain target:self action:@selector(saveAndBackToViewController:)];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(saveAndBackToViewController:)];
+    self.automaticallyAdjustsScrollViewInsets = NO;
     self.title = @"Creating new object";
     self.dataSource = [NSArray arrayWithObjects:
                        @"Africa",
@@ -37,9 +39,50 @@
                        @"South America", nil];
 }
 
+-  (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+    [defaultCenter addObserver:self
+                      selector:@selector(keyBoardDidShow:)
+                          name:UIKeyboardDidShowNotification
+                        object:nil];
+    
+    [defaultCenter addObserver:self
+                      selector:@selector(keyboardDidHide:)
+                          name:UIKeyboardDidHideNotification
+                        object:nil];
+    
+    self.scrollView.contentSize = self.scrollView.frame.size;
+    
+//    NSLog(@"screen %@", NSStringFromCGRect([self.view frame]));
+//    NSLog(@"frame scroll %@", NSStringFromCGRect([self.scrollView frame]));
+//    NSLog(@"contentSize %@", NSStringFromCGSize(self.scrollView.contentSize));
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
+    [super viewDidAppear:YES];
     [self.countryField becomeFirstResponder];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+}
+
+- (void)keyBoardDidShow:(NSNotification*)notification
+{
+    NSDictionary *info = [notification userInfo];
+    CGSize kbSize                         = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    self.scrollView.contentInset          = UIEdgeInsetsMake(0, 0, kbSize.height, 0);
+    self.scrollView.scrollIndicatorInsets = UIEdgeInsetsMake(64, 0, kbSize.height, 0);
+}
+
+- (void)keyboardDidHide:(NSNotification*)notification
+{
+    self.scrollView.contentInset = UIEdgeInsetsZero;
+    self.scrollView.scrollIndicatorInsets = UIEdgeInsetsZero;
 }
 
 - (void)saveAndBackToViewController:(UIBarButtonItem*)barButtonItem
@@ -52,32 +95,36 @@
         NSMutableArray *array = [NSMutableArray arrayWithObjects:self.countryField, self.capitalField, self.populationField, nil];
         
         NSMutableArray *otherArray = [NSMutableArray array];
+        NSString *str;
         for (UITextField *textField in array) {
             if ([textField.text isEqualToString:@""]) {
                 [otherArray addObject:textField.placeholder];
-                self.string = [otherArray componentsJoinedByString:@", "];
-                self.string = self.string.lowercaseString;
+                str = [otherArray componentsJoinedByString:@", "];
+                str = str.lowercaseString;
             }
         }
-        self.string = [self.string stringByReplacingOccurrencesOfString:@"new " withString:@""];
-        [self showAlert:self.string];
+        str = [str stringByReplacingOccurrencesOfString:@"new " withString:@""];
+        [self showAlert:str];
         
     } else if (barButtonItem == self.navigationItem.rightBarButtonItem) {
         NSInteger index = [self.pickerView selectedRowInComponent:0];
-        CountryInfo *allValues = [[CountryInfo alloc] init];
-        allValues.continentTitle  = [self.dataSource objectAtIndex:index];
-        allValues.countryTitle = self.countryField.text;
-        allValues.capitalTitle = self.capitalField.text;
-        allValues.population = @([self.populationField.text intValue]);
-        [[CountryModel sharedInstance] addNewObject:allValues];
+        
+        Country *entity   = [Country MR_createEntity];
+        entity.continent  = [self.dataSource objectAtIndex:index];
+        entity.country    = self.countryField.text;
+        entity.capital    = self.capitalField.text;
+        entity.population = @([self.populationField.text integerValue]);
+        
+        [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+        
         [self dismissViewControllerAnimated:YES completion:nil];
     }
 }
 
-- (void)showAlert:(NSString*)srting
+- (void)showAlert:(NSString*)string
 {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"CountryApp"
-                                                                   message:[NSString stringWithFormat: @"Sorry, but you have %@ empty fields. Please, fill them in", self.string]
+                                                                   message:[NSString stringWithFormat: @"Sorry, but you have %@ empty fields. Please, fill them in", string]
                                                             preferredStyle:UIAlertControllerStyleAlert];
     
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK"
@@ -98,6 +145,9 @@
         
         NSString *filtered = [[string componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
         
+        if (self.populationField.text.length > 18) {
+            return NO;
+        }
         return [string isEqualToString:filtered];
     }
     return  YES;

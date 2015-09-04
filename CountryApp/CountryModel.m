@@ -8,48 +8,55 @@
 
 #import "CountryModel.h"
 #import <CoreGraphics/CoreGraphics.h>
+#import <NSManagedObjectContext+MagicalSaves.h>
+#import <MagicalRecord+ShorthandMethods.h>
+#import <NSManagedObject+MagicalRecord.h>
 
-#define kAllCountries @"AllCountries"
+#import "Country.h"
 #define kIsEnter @"Counter"
+
 @interface CountryModel()
+
+
 @property NSMutableArray *continents;
+@property (nonatomic, strong) Country *country;
 
 @end
 
 @implementation CountryModel
 
+
+
 - (id)init
 {
     self = [super init];
     if (self) {
-        NSString *defaultPath = [[NSBundle mainBundle] pathForResource:@"CountriesAndCapitals.plist" ofType:nil];
-        self.continents = [NSMutableArray arrayWithContentsOfFile:defaultPath];
-        
-        self.continents = [self fillArray];
-        
-        [self readingAndDecoding];
-
+        [self readingData];
     }
     return self;
 }
 
 - (NSMutableArray*)fillArray
 {
+   
     NSMutableArray *allValues = [NSMutableArray array];
     for (NSDictionary *informationOfCountry in self.continents) {
-        CountryInfo *obj = [CountryInfo countryInfoWithContinent:informationOfCountry[@"continent"]
-                                                         country:informationOfCountry[@"country"]
-                                                         capital:informationOfCountry[@"capital"]
-                                                      population:informationOfCountry[@"population"]];
+        Country *obj = [Country countryInfoWithContinent:informationOfCountry[@"continent"]
+                                                 country:informationOfCountry[@"country"]
+                                                 capital:informationOfCountry[@"capital"]
+                                              population:informationOfCountry[@"population"]];
         [allValues addObject:obj];
     }
+    [self savingData];
     return  allValues;
 }
 
 + (CountryModel*)sharedInstance                     /*singleTon*/
 {
     static CountryModel *_sharedInstance = nil;
+    // dispatch_once_t type is long
     static dispatch_once_t oncePredicate;
+    // & means getting adress of primitive
     dispatch_once(&oncePredicate, ^{
         _sharedInstance = [[CountryModel alloc] init];
     });
@@ -59,29 +66,37 @@
 
 - (NSInteger)numberOfContinents
 {
-    NSArray *continent = [self allContinents];
-    return [continent count];
+//    NSArray *continent = [self allContinents];
+//    return [continent count];
+    return [[[self allContinents] sections] count];
 }
 
 - (NSInteger)countOfCountriesInContinent:(NSString*)titleOfContinent
 {
-    NSInteger countOfCountries = [[self allCountriesInContinent:titleOfContinent] count];
-    return countOfCountries;
+//    NSInteger countOfCountries = [[self allCountriesInContinent:titleOfContinent] count];
+//    return countOfCountries;
+    return [[[self allCountriesInContinent:titleOfContinent] sections] count];
 }
 
 - (NSString*)titleOfContinentForIndex:(NSInteger)index
 {
-    NSArray *continent  = [[self allContinents] sortedArrayUsingSelector:@selector(compare:)]/*reverseObjectEnumerator] allObjects]*/;
-    return [continent objectAtIndex:index];
+//    NSArray *continent  = [[self allContinents] sortedArrayUsingSelector:@selector(compare:)]/*reverseObjectEnumerator] allObjects]*/;
+//    return [continent objectAtIndex:index];
+    NSArray *continent = [[self allContinents] sections]; //sortedArrayUsingSelector:@selector(compare:)];
+    NSString *str = [[continent objectAtIndex:index] name];
+    return str;
 }
 
-- (CountryInfo*)countryInfoObj:(NSIndexPath*)indexPath
+- (Country*)countryInfoObj:(NSIndexPath*)indexPath
 {
-    NSString *str = [self titleOfContinentForIndex:indexPath.section];
-    NSArray *arr = [self allCountriesInContinent:str];
+//    NSString *str = [self titleOfContinentForIndex:indexPath.section];
+//    NSArray *arr = [self allCountriesInContinent:str];
     
-    arr = [arr sortedArrayUsingComparator:^NSComparisonResult(CountryInfo *obj1, CountryInfo *obj2) {
-        return [obj1.countryTitle compare:obj2.countryTitle];
+    NSString *str = [self titleOfContinentForIndex:indexPath.section];
+    NSArray *arr = [[self allCountriesInContinent:str] sections];
+    
+    arr = [arr sortedArrayUsingComparator:^NSComparisonResult(Country *obj1, Country *obj2) {
+        return [obj1.country compare:obj2.country];
     }];
     
     return [arr objectAtIndex:indexPath.row];
@@ -89,57 +104,65 @@
 
 - (void)deleteObjectFromList:(NSIndexPath*)indexPath
 {
-    CountryInfo *obj = [self countryInfoObj:indexPath];
-    [self.continents removeObject:obj];
-    [self savingAndEncoding];
+    self.country = [self countryInfoObj:indexPath];
+    [self.country MR_deleteEntity];
+    [self savingData];
+    [self.continents removeObject:self.country];
+  
 }
 
-- (void)addNewObject:(CountryInfo*)countryInfo
+- (void)addNewObject:(Country*)countryInfo
 {
     [self.continents addObject:countryInfo];
-    [self savingAndEncoding];
+    [self savingData];
 }
 
 #pragma mark - Private methods
 
-- (NSArray*)allCountriesInContinent:(NSString*)titleOfContinent
+- (NSFetchedResultsController*)allCountriesInContinent:(NSString*)titleOfContinent
 {
-    NSMutableArray *countryArray = [NSMutableArray array];
-    
-    for (CountryInfo *countryInfo in self.continents) {
-        if ([titleOfContinent isEqualToString:countryInfo.continentTitle]) {
-            [countryArray addObject:countryInfo];
-        }
-    }
-    return countryArray;
+//    NSMutableArray *countryArray = [NSMutableArray array];
+//    
+//    for (Country *countryInfo in self.continents) {
+//        if ([titleOfContinent isEqualToString:countryInfo.continent]) {
+//            [countryArray addObject:countryInfo];
+//        }
+//    }
+//    return countryArray;
+//    return [Country MR_fetchAllSortedBy:@"continent" ascending:YES withPredicate:nil groupBy:@"continent" delegate:self inContext:[NSManagedObjectContext MR_defaultContext]];
+    return [Country MR_fetchAllGroupedBy:@"country" withPredicate:nil sortedBy:@"continent" ascending:YES delegate:self];
 }
 
-- (NSArray*)allContinents
+- (NSFetchedResultsController*)allContinents
 {
-    NSMutableSet *continentSet = [NSMutableSet set];
-    for (CountryInfo *countryInfo in self.continents) {
-        [continentSet addObject:countryInfo.continentTitle];
-    }
-    NSArray *continentArr = [continentSet allObjects];
-    return continentArr;
+//    NSMutableSet *continentSet = [NSMutableSet set];
+//    for (Country *countryInfo in self.continents) {
+//        [continentSet addObject:countryInfo.continent];
+//    }
+//    NSArray *continentArr = [continentSet allObjects];
+    
+    return [Country MR_fetchAllGroupedBy:@"continent" withPredicate:nil sortedBy:@"country" ascending:YES delegate:self];
 }
-- (void)readingAndDecoding
+
+- (void)readingData
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     BOOL isSecond = [defaults boolForKey:kIsEnter];
     if (isSecond) {
-        NSData *obj = [defaults dataForKey:kAllCountries];
-        self.continents = [NSKeyedUnarchiver unarchiveObjectWithData:obj];
+        self.continents = [[Country MR_findAll] mutableCopy];
         
+    } else {
+        NSString *defaultPath = [[NSBundle mainBundle] pathForResource:@"CountriesAndCapitals" ofType:@"plist"];
+        self.continents = [NSMutableArray arrayWithContentsOfFile:defaultPath];
+        self.continents = [self fillArray];
     }
 }
 
-
-- (void)savingAndEncoding
+- (void)savingData
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:[NSKeyedArchiver archivedDataWithRootObject:self.self.continents] forKey:kAllCountries];
     [defaults setBool:YES forKey:kIsEnter];
+    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
 }
 
 @end

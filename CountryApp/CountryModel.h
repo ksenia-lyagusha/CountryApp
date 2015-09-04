@@ -8,15 +8,16 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "CountryInfo.h"
+#import "Country.h"
+
 @interface CountryModel : NSObject
 
 + (CountryModel*)sharedInstance;
 - (NSInteger)numberOfContinents;
 - (NSString*)titleOfContinentForIndex:(NSInteger)index;
 - (NSInteger)countOfCountriesInContinent:(NSString*)continent;
-- (CountryInfo*)countryInfoObj:(NSIndexPath*)indexPath;
+- (Country*)countryInfoObj:(NSIndexPath*)indexPath;
 - (void)deleteObjectFromList:(NSIndexPath*)indexPath;
-- (void)addNewObject:(CountryInfo*)countryInfo;
+- (void)addNewObject:(Country*)countryInfo;
 
 @end

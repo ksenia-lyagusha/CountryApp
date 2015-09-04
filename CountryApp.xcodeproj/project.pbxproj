@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A69DE8E0DCECC26044A8A93C /* libPods-CountryApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BAAE8FC08C6A82D3BA83519B /* libPods-CountryApp.a */; };
 		C514BFC01B15868300F001A2 /* AddInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = C514BFBE1B15868300F001A2 /* AddInfoController.m */; };
 		C514BFC11B15868300F001A2 /* AddInfoController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C514BFBF1B15868300F001A2 /* AddInfoController.xib */; };
 		C52DE72B1B0D9DE6004EEB04 /* DetailInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = C52DE7291B0D9DE6004EEB04 /* DetailInfoController.m */; };
 		C52DE72C1B0D9DE6004EEB04 /* DetailInfoController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C52DE72A1B0D9DE6004EEB04 /* DetailInfoController.xib */; };
-		C569DF491ACC928A00312F3F /* CountryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C569DF481ACC928A00312F3F /* CountryModel.m */; };
 		C5D4593C1AC8645D00E1C4EC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D4593B1AC8645D00E1C4EC /* main.m */; };
 		C5D4593F1AC8645D00E1C4EC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D4593E1AC8645D00E1C4EC /* AppDelegate.m */; };
 		C5D459471AC8645D00E1C4EC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C5D459461AC8645D00E1C4EC /* Images.xcassets */; };
@@ -21,6 +21,12 @@
 		C5D459631AC8666C00E1C4EC /* CountryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5D459611AC8666C00E1C4EC /* CountryViewController.xib */; };
 		C5E70D881AEF6073007EB2D6 /* CountriesAndCapitals.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5E70D871AEF6073007EB2D6 /* CountriesAndCapitals.plist */; };
 		C5F67CFC1AF0ABA200D43780 /* CountryInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = C5F67CFB1AF0ABA200D43780 /* CountryInfo.m */; };
+		D718253B1B4564040081F500 /* FrameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D718253A1B4564040081F500 /* FrameViewController.m */; };
+		D7466EDB1B557B3D004B9950 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D7466ED91B557B3D004B9950 /* ViewController.m */; };
+		D7466EDC1B557B3D004B9950 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D7466EDA1B557B3D004B9950 /* ViewController.xib */; };
+		D78D76C71B91A0750050E369 /* CountryApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D78D76C51B91A0750050E369 /* CountryApp.xcdatamodeld */; };
+		D78D76CA1B91A2150050E369 /* Country.m in Sources */ = {isa = PBXBuildFile; fileRef = D78D76C91B91A2150050E369 /* Country.m */; };
+		D78D76CC1B91A7B40050E369 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D78D76CB1B91A7B40050E369 /* CoreData.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,14 +40,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		97458EF57FACC3651C8B54EC /* Pods-CountryApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CountryApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CountryApp/Pods-CountryApp.debug.xcconfig"; sourceTree = "<group>"; };
+		BAAE8FC08C6A82D3BA83519B /* libPods-CountryApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CountryApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C514BFBD1B15868300F001A2 /* AddInfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddInfoController.h; sourceTree = "<group>"; };
 		C514BFBE1B15868300F001A2 /* AddInfoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddInfoController.m; sourceTree = "<group>"; };
 		C514BFBF1B15868300F001A2 /* AddInfoController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddInfoController.xib; sourceTree = "<group>"; };
 		C52DE7281B0D9DE6004EEB04 /* DetailInfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailInfoController.h; sourceTree = "<group>"; };
 		C52DE7291B0D9DE6004EEB04 /* DetailInfoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailInfoController.m; sourceTree = "<group>"; };
 		C52DE72A1B0D9DE6004EEB04 /* DetailInfoController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailInfoController.xib; sourceTree = "<group>"; };
-		C569DF471ACC928A00312F3F /* CountryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountryModel.h; sourceTree = "<group>"; };
-		C569DF481ACC928A00312F3F /* CountryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CountryModel.m; sourceTree = "<group>"; };
 		C5D459361AC8645D00E1C4EC /* CountryApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CountryApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5D4593A1AC8645D00E1C4EC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C5D4593B1AC8645D00E1C4EC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -50,7 +56,6 @@
 		C5D459461AC8645D00E1C4EC /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		C5D459491AC8645D00E1C4EC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		C5D4594F1AC8645D00E1C4EC /* CountryAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CountryAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		C5D459541AC8645D00E1C4EC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C5D459551AC8645D00E1C4EC /* CountryAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CountryAppTests.m; sourceTree = "<group>"; };
 		C5D4595F1AC8666C00E1C4EC /* CountryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountryViewController.h; sourceTree = "<group>"; };
 		C5D459601AC8666C00E1C4EC /* CountryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CountryViewController.m; sourceTree = "<group>"; wrapsLines = 0; };
@@ -58,6 +63,16 @@
 		C5E70D871AEF6073007EB2D6 /* CountriesAndCapitals.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CountriesAndCapitals.plist; sourceTree = "<group>"; };
 		C5F67CFA1AF0ABA200D43780 /* CountryInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountryInfo.h; sourceTree = "<group>"; };
 		C5F67CFB1AF0ABA200D43780 /* CountryInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CountryInfo.m; sourceTree = "<group>"; };
+		D5BD94664083225430EF1F4A /* Pods-CountryApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CountryApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-CountryApp/Pods-CountryApp.release.xcconfig"; sourceTree = "<group>"; };
+		D71825391B4564040081F500 /* FrameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FrameViewController.h; sourceTree = "<group>"; };
+		D718253A1B4564040081F500 /* FrameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FrameViewController.m; sourceTree = "<group>"; };
+		D7466ED81B557B3D004B9950 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		D7466ED91B557B3D004B9950 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		D7466EDA1B557B3D004B9950 /* ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ViewController.xib; sourceTree = "<group>"; };
+		D78D76C61B91A0750050E369 /* CountryApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CountryApp.xcdatamodel; sourceTree = "<group>"; };
+		D78D76C81B91A2150050E369 /* Country.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Country.h; sourceTree = "<group>"; };
+		D78D76C91B91A2150050E369 /* Country.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Country.m; sourceTree = "<group>"; };
+		D78D76CB1B91A7B40050E369 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +80,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D78D76CC1B91A7B40050E369 /* CoreData.framework in Frameworks */,
+				A69DE8E0DCECC26044A8A93C /* libPods-CountryApp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,12 +95,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5C6D8D6E71580CB94ED19CC0 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				97458EF57FACC3651C8B54EC /* Pods-CountryApp.debug.xcconfig */,
+				D5BD94664083225430EF1F4A /* Pods-CountryApp.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		C5D4592D1AC8645D00E1C4EC = {
 			isa = PBXGroup;
 			children = (
 				C5D459381AC8645D00E1C4EC /* CountryApp */,
 				C5D459521AC8645D00E1C4EC /* CountryAppTests */,
 				C5D459371AC8645D00E1C4EC /* Products */,
+				D78D76CD1B91A91D0050E369 /* Frameworks */,
+				5C6D8D6E71580CB94ED19CC0 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -99,6 +127,8 @@
 		C5D459381AC8645D00E1C4EC /* CountryApp */ = {
 			isa = PBXGroup;
 			children = (
+				D78D76C81B91A2150050E369 /* Country.h */,
+				D78D76C91B91A2150050E369 /* Country.m */,
 				C514BFBD1B15868300F001A2 /* AddInfoController.h */,
 				C514BFBE1B15868300F001A2 /* AddInfoController.m */,
 				C514BFBF1B15868300F001A2 /* AddInfoController.xib */,
@@ -106,16 +136,20 @@
 				C5D4593E1AC8645D00E1C4EC /* AppDelegate.m */,
 				C5F67CFA1AF0ABA200D43780 /* CountryInfo.h */,
 				C5F67CFB1AF0ABA200D43780 /* CountryInfo.m */,
-				C569DF471ACC928A00312F3F /* CountryModel.h */,
-				C569DF481ACC928A00312F3F /* CountryModel.m */,
 				C5D4595F1AC8666C00E1C4EC /* CountryViewController.h */,
 				C5D459601AC8666C00E1C4EC /* CountryViewController.m */,
 				C5D459611AC8666C00E1C4EC /* CountryViewController.xib */,
 				C52DE7281B0D9DE6004EEB04 /* DetailInfoController.h */,
 				C52DE7291B0D9DE6004EEB04 /* DetailInfoController.m */,
 				C52DE72A1B0D9DE6004EEB04 /* DetailInfoController.xib */,
+				D71825391B4564040081F500 /* FrameViewController.h */,
+				D718253A1B4564040081F500 /* FrameViewController.m */,
+				D7466ED81B557B3D004B9950 /* ViewController.h */,
+				D7466ED91B557B3D004B9950 /* ViewController.m */,
+				D7466EDA1B557B3D004B9950 /* ViewController.xib */,
 				C5D459461AC8645D00E1C4EC /* Images.xcassets */,
 				C5D459481AC8645D00E1C4EC /* LaunchScreen.xib */,
+				D78D76C51B91A0750050E369 /* CountryApp.xcdatamodeld */,
 				C5D459391AC8645D00E1C4EC /* Supporting Files */,
 			);
 			path = CountryApp;
@@ -135,17 +169,17 @@
 			isa = PBXGroup;
 			children = (
 				C5D459551AC8645D00E1C4EC /* CountryAppTests.m */,
-				C5D459531AC8645D00E1C4EC /* Supporting Files */,
 			);
 			path = CountryAppTests;
 			sourceTree = "<group>";
 		};
-		C5D459531AC8645D00E1C4EC /* Supporting Files */ = {
+		D78D76CD1B91A91D0050E369 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				C5D459541AC8645D00E1C4EC /* Info.plist */,
+				D78D76CB1B91A7B40050E369 /* CoreData.framework */,
+				BAAE8FC08C6A82D3BA83519B /* libPods-CountryApp.a */,
 			);
-			name = "Supporting Files";
+			path = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -155,9 +189,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C5D459591AC8645D00E1C4EC /* Build configuration list for PBXNativeTarget "CountryApp" */;
 			buildPhases = (
+				4696A839E88F5EE2696E4A86 /* Check Pods Manifest.lock */,
 				C5D459321AC8645D00E1C4EC /* Sources */,
 				C5D459331AC8645D00E1C4EC /* Frameworks */,
 				C5D459341AC8645D00E1C4EC /* Resources */,
+				05309D76B6F90221A85E02A3 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -228,6 +264,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D7466EDC1B557B3D004B9950 /* ViewController.xib in Resources */,
 				C514BFC11B15868300F001A2 /* AddInfoController.xib in Resources */,
 				C5E70D881AEF6073007EB2D6 /* CountriesAndCapitals.plist in Resources */,
 				C52DE72C1B0D9DE6004EEB04 /* DetailInfoController.xib in Resources */,
@@ -246,17 +283,53 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		05309D76B6F90221A85E02A3 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CountryApp/Pods-CountryApp-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4696A839E88F5EE2696E4A86 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		C5D459321AC8645D00E1C4EC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D7466EDB1B557B3D004B9950 /* ViewController.m in Sources */,
 				C52DE72B1B0D9DE6004EEB04 /* DetailInfoController.m in Sources */,
 				C5F67CFC1AF0ABA200D43780 /* CountryInfo.m in Sources */,
+				D718253B1B4564040081F500 /* FrameViewController.m in Sources */,
 				C5D4593F1AC8645D00E1C4EC /* AppDelegate.m in Sources */,
 				C514BFC01B15868300F001A2 /* AddInfoController.m in Sources */,
 				C5D4593C1AC8645D00E1C4EC /* main.m in Sources */,
-				C569DF491ACC928A00312F3F /* CountryModel.m in Sources */,
+				D78D76C71B91A0750050E369 /* CountryApp.xcdatamodeld in Sources */,
+				D78D76CA1B91A2150050E369 /* Country.m in Sources */,
 				C5D459621AC8666C00E1C4EC /* CountryViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -369,21 +442,25 @@
 		};
 		C5D4595A1AC8645D00E1C4EC /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 97458EF57FACC3651C8B54EC /* Pods-CountryApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = CountryApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
 		C5D4595B1AC8645D00E1C4EC /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D5BD94664083225430EF1F4A /* Pods-CountryApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = CountryApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -452,6 +529,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		D78D76C51B91A0750050E369 /* CountryApp.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				D78D76C61B91A0750050E369 /* CountryApp.xcdatamodel */,
+			);
+			currentVersion = D78D76C61B91A0750050E369 /* CountryApp.xcdatamodel */;
+			path = CountryApp.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = C5D4592E1AC8645D00E1C4EC /* Project object */;
 }

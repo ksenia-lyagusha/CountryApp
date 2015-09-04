@@ -7,8 +7,11 @@
 //
 
 #import "DetailInfoController.h"
+#import <NSManagedObject+MagicalFinders.h>
+#import "CountryViewController.h"
 
 @interface DetailInfoController ()
+
 @property (weak, nonatomic) IBOutlet UILabel *continent;
 @property (weak, nonatomic) IBOutlet UILabel *country;
 @property (weak, nonatomic) IBOutlet UILabel *capital;
@@ -21,14 +24,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    CountryViewController *countryVC = [[CountryViewController alloc] init];
+    self.obj = [countryVC.fetchedResultsController objectAtIndexPath:<#(NSIndexPath *)#>]
     self.view.backgroundColor = [UIColor yellowColor];
+    self.title = self.obj.country;
+    self.continent.text = self.obj.continent;
+    self.country.text = self.obj.country;
+    self.capital.text = self.obj.capital;
+    self.population.text = [NSString stringWithFormat:@"%@", self.obj.population];
     
-
-    self.title = self.obj.countryTitle;
-    self.continent.text = self.obj.continentTitle;
-    self.country.text = self.obj.countryTitle;
-    self.capital.text = self.obj.capitalTitle;
-    self.population.text = [self.obj.population stringValue];
 }
 
 @end
