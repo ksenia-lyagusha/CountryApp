@@ -7,8 +7,9 @@
 //
 
 #import "AppDelegate.h"
-#import "CountryViewController.h"
 #import "MagicalRecord+Setup.h"
+#import "CountryAppModel.h"
+
 @interface AppDelegate ()
 
 @end
@@ -18,19 +19,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    
-    UIViewController *countryController = [[CountryViewController alloc] init];
-    
-//    FrameViewController *frameView = [[FrameViewController alloc] init];
-//    ViewController *vk = [[ViewController alloc] init];
-    
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:countryController];
-    self.window.rootViewController = navigationController;
-  
     [MagicalRecord setupCoreDataStack];
     
-    [self.window makeKeyAndVisible];
+    [[CountryAppModel sharedInstance] readingData];
+    
     return YES;
 }
 

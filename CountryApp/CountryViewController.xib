@@ -14,24 +14,18 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-            <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="bbN-2l-8Hc">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                    <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
-                    <color key="sectionIndexBackgroundColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                    <connections>
-                        <outlet property="dataSource" destination="-1" id="LqQ-R8-cqw"/>
-                        <outlet property="delegate" destination="-1" id="m54-WS-8fi"/>
-                    </connections>
-                </tableView>
-            </subviews>
-            <constraints>
-                <constraint firstAttribute="trailing" secondItem="bbN-2l-8Hc" secondAttribute="trailing" id="4rU-Ju-gaU"/>
-                <constraint firstItem="bbN-2l-8Hc" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Boi-zv-LvM"/>
-                <constraint firstAttribute="bottom" secondItem="bbN-2l-8Hc" secondAttribute="bottom" id="Iz3-bs-tSp"/>
-                <constraint firstItem="bbN-2l-8Hc" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Zb0-Bs-y1r"/>
-            </constraints>
             <point key="canvasLocation" x="610" y="470"/>
         </view>
+        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="bbN-2l-8Hc">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="sectionIndexBackgroundColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+            <connections>
+                <outlet property="dataSource" destination="-1" id="LqQ-R8-cqw"/>
+                <outlet property="delegate" destination="-1" id="m54-WS-8fi"/>
+            </connections>
+            <point key="canvasLocation" x="610" y="470"/>
+        </tableView>
     </objects>
 </document>

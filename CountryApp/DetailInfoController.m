@@ -24,8 +24,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    CountryViewController *countryVC = [[CountryViewController alloc] init];
-    self.obj = [countryVC.fetchedResultsController objectAtIndexPath:<#(NSIndexPath *)#>]
     self.view.backgroundColor = [UIColor yellowColor];
     self.title = self.obj.country;
     self.continent.text = self.obj.continent;

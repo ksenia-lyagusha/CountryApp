@@ -21,6 +21,36 @@
 
 @implementation CountryViewController
 
+#pragma mark - View Methods
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    NSError *error;
+    if (![self.fetchedResultsController performFetch:&error]) {
+        // Update to handle the error appropriately.
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        exit(-1);  // Fail
+    }
+    
+    self.title = @"Countries";
+
+    self.navigationItem.leftBarButtonItem  = self.editButtonItem;
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStylePlain target:self action:@selector(createNewObject)];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.tableView reloadData];
+}
+
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated
+{
+    [super setEditing:editing animated:animated];
+    [self.tableView setEditing:editing animated:YES];
+}
+
 - (NSFetchedResultsController *)fetchedResultsController
 {
     
@@ -50,61 +80,26 @@
     
 }
 
-#pragma mark - View Methods
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    NSError *error;
-    if (![[self fetchedResultsController] performFetch:&error]) {
-        // Update to handle the error appropriately.
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        exit(-1);  // Fail
-    }
-    
-    self.title = @"Countries";
-    self.navigationItem.leftBarButtonItem  = self.editButtonItem;
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStylePlain target:self action:@selector(createNewObject)];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    [self.tableView reloadData];
-}
-
-- (void)viewDidUnload
-{
-    self.fetchedResultsController = nil;
-}
-
-- (void)setEditing:(BOOL)editing animated:(BOOL)animated
-{
-    [super setEditing:editing animated:animated];
-    [self.tableView setEditing:editing animated:YES];
-}
-
 #pragma mark - DataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return [[_fetchedResultsController sections] count];
+    return [[self.fetchedResultsController sections] count];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return [[[_fetchedResultsController sections] objectAtIndex:section] name];
+    return [[[self.fetchedResultsController sections] objectAtIndex:section] name];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)sectiontableView
 {
-    id  sectionInfo = [[_fetchedResultsController sections] objectAtIndex:sectiontableView];
-    return [sectionInfo numberOfObjects];
+    return [[[self.fetchedResultsController sections] objectAtIndex:sectiontableView] numberOfObjects];
 }
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    Country *obj              = [_fetchedResultsController objectAtIndexPath:indexPath];
+    Country *obj              = [self.fetchedResultsController objectAtIndexPath:indexPath];
     cell.textLabel.text       = obj.country;
     cell.detailTextLabel.text = [obj additionalInfo];
     
@@ -147,8 +142,10 @@
 - (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    DetailInfoController *detailInfo = [[DetailInfoController alloc] init];
-    [self.navigationController pushViewController:detailInfo animated:YES];// detailViewController
+//    DetailInfoController *detailInfo = [[DetailInfoController alloc] init];
+//    [self.navigationController pushViewController:detailInfo animated:YES];// detailViewController
+//    detailInfo.obj = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    [self performSegueWithIdentifier:@"DetailPushSegue" sender:indexPath];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -178,11 +175,13 @@
 
 - (void)createNewObject
 {
-    AddInfoController *addInfoController = [[AddInfoController alloc] init];
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:addInfoController];
-    [self presentViewController:navigationController animated:YES completion:nil];
-
+//    AddInfoController *addInfoController = [[AddInfoController alloc] init];
+//    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:addInfoController];
+//    [self presentViewController:navigationController animated:YES completion:nil];
+    [self performSegueWithIdentifier:@"AddInfoPushSegue" sender:self];
+    
 }
+
 #pragma mark - NSFetchedResultsControllerDelegate
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
@@ -204,7 +203,7 @@
             
         case NSFetchedResultsChangeInsert:
             [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
+        break;
             
         case NSFetchedResultsChangeDelete:
             [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
@@ -215,12 +214,14 @@
             break;
             
         case NSFetchedResultsChangeMove:
-            [tableView deleteRowsAtIndexPaths:[NSArray
-                                               arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            [tableView insertRowsAtIndexPaths:[NSArray
-                                               arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        default:
             break;
     }
+    
 }
 
 
@@ -240,6 +241,9 @@
         case NSFetchedResultsChangeDelete:
             [tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
             break;
+            
+        default:
+            break;
     }
 }
 
@@ -247,6 +251,21 @@
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
     // The fetch controller has sent all current change notifications, so tell the table view to process all updates.
     [self.tableView endUpdates];
+}
+
+#pragma mark - Storyboard
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    // Make sure your segue name in storyboard is the same as this line
+    if ([[segue identifier] isEqualToString:@"DetailPushSegue"])
+    {
+        // Get reference to the destination view controller
+        DetailInfoController *detailInfo = [segue destinationViewController];
+        
+        // Pass any objects to the view controller here, like...
+        detailInfo.obj = [self.fetchedResultsController objectAtIndexPath:sender];
+    }
 }
 
 @end
