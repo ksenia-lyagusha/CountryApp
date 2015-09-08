@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A69DE8E0DCECC26044A8A93C /* libPods-CountryApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BAAE8FC08C6A82D3BA83519B /* libPods-CountryApp.a */; };
+		6BCE6D544CA8DB4EFA594E2A /* Pods_CountryApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15255C9F3CA0CAE6A73F4413 /* Pods_CountryApp.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		C514BFC01B15868300F001A2 /* AddInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = C514BFBE1B15868300F001A2 /* AddInfoController.m */; };
 		C52DE72B1B0D9DE6004EEB04 /* DetailInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = C52DE7291B0D9DE6004EEB04 /* DetailInfoController.m */; };
 		C5D4593C1AC8645D00E1C4EC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D4593B1AC8645D00E1C4EC /* main.m */; };
@@ -36,8 +36,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		15255C9F3CA0CAE6A73F4413 /* Pods_CountryApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CountryApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		97458EF57FACC3651C8B54EC /* Pods-CountryApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CountryApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CountryApp/Pods-CountryApp.debug.xcconfig"; sourceTree = "<group>"; };
-		BAAE8FC08C6A82D3BA83519B /* libPods-CountryApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CountryApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C514BFBD1B15868300F001A2 /* AddInfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddInfoController.h; sourceTree = "<group>"; };
 		C514BFBE1B15868300F001A2 /* AddInfoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddInfoController.m; sourceTree = "<group>"; };
 		C52DE7281B0D9DE6004EEB04 /* DetailInfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailInfoController.h; sourceTree = "<group>"; };
@@ -72,7 +72,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D78D76CC1B91A7B40050E369 /* CoreData.framework in Frameworks */,
-				A69DE8E0DCECC26044A8A93C /* libPods-CountryApp.a in Frameworks */,
+				6BCE6D544CA8DB4EFA594E2A /* Pods_CountryApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,7 +163,7 @@
 			isa = PBXGroup;
 			children = (
 				D78D76CB1B91A7B40050E369 /* CoreData.framework */,
-				BAAE8FC08C6A82D3BA83519B /* libPods-CountryApp.a */,
+				15255C9F3CA0CAE6A73F4413 /* Pods_CountryApp.framework */,
 			);
 			path = Frameworks;
 			sourceTree = "<group>";
@@ -180,6 +180,7 @@
 				C5D459331AC8645D00E1C4EC /* Frameworks */,
 				C5D459341AC8645D00E1C4EC /* Resources */,
 				05309D76B6F90221A85E02A3 /* Copy Pods Resources */,
+				9A183E9BE6AFFBB00F43A734 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -295,6 +296,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		9A183E9BE6AFFBB00F43A734 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CountryApp/Pods-CountryApp-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -428,6 +444,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = CountryApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -440,6 +457,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = CountryApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";

@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <NSManagedObject+MagicalRecord.h>
+#import "MagicalRecord.h"
 
 @interface CountryViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate>
 @property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;

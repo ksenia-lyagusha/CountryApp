@@ -8,8 +8,7 @@
 
 #import "CountryAppModel.h"
 #import "Country.h"
-#import <NSManagedObjectContext+MagicalSaves.h>
-#import <MagicalRecord+ShorthandMethods.h>
+#import "MagicalRecord.h"
 
 
 @interface CountryAppModel ()

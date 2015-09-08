@@ -7,7 +7,7 @@
 //
 
 #import "DetailInfoController.h"
-#import <NSManagedObject+MagicalFinders.h>
+#import "MagicalRecord.h"
 #import "CountryViewController.h"
 
 @interface DetailInfoController ()
@@ -29,8 +29,7 @@
     self.continent.text = self.obj.continent;
     self.country.text = self.obj.country;
     self.capital.text = self.obj.capital;
-    self.population.text = [NSString stringWithFormat:@"%@", self.obj.population];
-    
+    self.population.text = [NSString stringWithFormat:@"%@", self.obj.population ?: @""];
 }
 
 @end

@@ -8,7 +8,7 @@
 
 #import "AddInfoController.h"
 #import "Country.h"
-#import <MagicalRecord.h>
+#import "MagicalRecord.h"
 
 @interface AddInfoController()
 
@@ -18,6 +18,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *populationField;
 @property (strong, nonatomic) NSArray *dataSource;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+
+#define allTrim(object) [object stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]
 @end
 
 @implementation AddInfoController
@@ -29,7 +31,6 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Save up" style:UIBarButtonItemStylePlain target:self action:@selector(saveAndBackToViewController:)];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(saveAndBackToViewController:)];
     self.automaticallyAdjustsScrollViewInsets = NO;
-    self.title = @"Creating new object";
     self.dataSource = [NSArray arrayWithObjects:
                        @"Africa",
                        @"Asia",
@@ -53,7 +54,7 @@
                           name:UIKeyboardDidHideNotification
                         object:nil];
     
-    self.scrollView.contentSize = self.scrollView.frame.size;
+//    self.scrollView.contentSize = self.scrollView.frame.size;
     
 //    NSLog(@"screen %@", NSStringFromCGRect([self.view frame]));
 //    NSLog(@"frame scroll %@", NSStringFromCGRect([self.scrollView frame]));
@@ -66,10 +67,10 @@
     [self.countryField becomeFirstResponder];
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-}
+//- (void)viewWillDisappear:(BOOL)animated
+//{
+//    [super viewWillDisappear:animated];
+//}
 
 - (void)keyBoardDidShow:(NSNotification*)notification
 {
@@ -81,7 +82,7 @@
 
 - (void)keyboardDidHide:(NSNotification*)notification
 {
-    self.scrollView.contentInset = UIEdgeInsetsZero;
+    self.scrollView.contentInset          = UIEdgeInsetsZero;
     self.scrollView.scrollIndicatorInsets = UIEdgeInsetsZero;
 }
 
@@ -90,14 +91,14 @@
     if (barButtonItem == self.navigationItem.leftBarButtonItem){
         [self dismissViewControllerAnimated:YES completion:nil];
         
-    } else if ([self.countryField.text isEqualToString:@""] || [self.capitalField.text isEqualToString:@""] || [self.populationField.text isEqualToString:@""]) {
+    } else if ([allTrim(self.countryField.text) length] == 0 || [allTrim(self.capitalField.text) length] == 0 || [allTrim(self.populationField.text) length] == 0) {
         
         NSMutableArray *array = [NSMutableArray arrayWithObjects:self.countryField, self.capitalField, self.populationField, nil];
-        
+    
         NSMutableArray *otherArray = [NSMutableArray array];
         NSString *str;
         for (UITextField *textField in array) {
-            if ([textField.text isEqualToString:@""]) {
+            if ([allTrim(textField.text) length] == 0) {
                 [otherArray addObject:textField.placeholder];
                 str = [otherArray componentsJoinedByString:@", "];
                 str = str.lowercaseString;
