@@ -10,10 +10,10 @@
 #import "Country.h"
 #import "MagicalRecord.h"
 
+#define kIsEnter @"Counter"
 
 @interface CountryAppModel ()
 @property (strong, nonatomic) NSArray *continents;
-#define kIsEnter @"Counter"
 
 @end
 

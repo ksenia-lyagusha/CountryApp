@@ -10,6 +10,8 @@
 #import "Country.h"
 #import "MagicalRecord.h"
 
+#define allTrim(object) [object stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]
+
 @interface AddInfoController()
 
 @property (weak, nonatomic) IBOutlet UIPickerView *pickerView;
@@ -19,18 +21,15 @@
 @property (strong, nonatomic) NSArray *dataSource;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
-#define allTrim(object) [object stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]
 @end
 
 @implementation AddInfoController
+
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Save up" style:UIBarButtonItemStylePlain target:self action:@selector(saveAndBackToViewController:)];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(saveAndBackToViewController:)];
-//    self.automaticallyAdjustsScrollViewInsets = NO;
     self.dataSource = [NSArray arrayWithObjects:
                        @"Africa",
                        @"Asia",
@@ -53,12 +52,6 @@
                       selector:@selector(keyboardDidHide:)
                           name:UIKeyboardDidHideNotification
                         object:nil];
-    
-//    self.scrollView.contentSize = self.scrollView.frame.size;
-    
-//    NSLog(@"screen %@", NSStringFromCGRect([self.view frame]));
-//    NSLog(@"frame scroll %@", NSStringFromCGRect([self.scrollView frame]));
-//    NSLog(@"contentSize %@", NSStringFromCGSize(self.scrollView.contentSize));
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -66,11 +59,6 @@
     [super viewDidAppear:YES];
     [self.countryField becomeFirstResponder];
 }
-
-//- (void)viewWillDisappear:(BOOL)animated
-//{
-//    [super viewWillDisappear:animated];
-//}
 
 - (void)keyBoardDidShow:(NSNotification*)notification
 {
@@ -86,15 +74,15 @@
     self.scrollView.scrollIndicatorInsets = UIEdgeInsetsZero;
 }
 
-- (void)saveAndBackToViewController:(UIBarButtonItem*)barButtonItem
+- (IBAction)backAndSave:(UIBarButtonItem *)sender
 {
-    if (barButtonItem == self.navigationItem.leftBarButtonItem){
+    if (sender == self.navigationItem.leftBarButtonItem){
         [self dismissViewControllerAnimated:YES completion:nil];
         
     } else if ([allTrim(self.countryField.text) length] == 0 || [allTrim(self.capitalField.text) length] == 0 || [allTrim(self.populationField.text) length] == 0) {
         
         NSMutableArray *array = [NSMutableArray arrayWithObjects:self.countryField, self.capitalField, self.populationField, nil];
-    
+        
         NSMutableArray *otherArray = [NSMutableArray array];
         NSString *str;
         for (UITextField *textField in array) {
@@ -107,7 +95,7 @@
         str = [str stringByReplacingOccurrencesOfString:@"new " withString:@""];
         [self showAlert:str];
         
-    } else if (barButtonItem == self.navigationItem.rightBarButtonItem) {
+    } else if (sender == self.navigationItem.rightBarButtonItem) {
         NSInteger index = [self.pickerView selectedRowInComponent:0];
         
         Country *entity   = [Country MR_createEntity];
@@ -120,6 +108,7 @@
         
         [self dismissViewControllerAnimated:YES completion:nil];
     }
+
 }
 
 - (void)showAlert:(NSString*)string
@@ -179,7 +168,7 @@
     return self.dataSource.count;
 }
 
-#pragma mark - IPickerViewDelegate
+#pragma mark - UIPickerViewDelegate
 
 - (NSString*)pickerView:(UIPickerView*)thePickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {

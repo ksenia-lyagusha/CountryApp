@@ -34,7 +34,6 @@
         exit(-1);  // Fail
     }
     self.navigationItem.leftBarButtonItem  = self.editButtonItem;
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStylePlain target:self action:@selector(createNewObject)];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -72,7 +71,7 @@
                                                                                                     sectionNameKeyPath:@"continent"
                                                                                                              cacheName:nil];
     self.fetchedResultsController = theFetchedResultsController;
-//    _fetchedResultsController.delegate = self;
+    _fetchedResultsController.delegate = self;
     
     return _fetchedResultsController;
     
@@ -106,7 +105,8 @@
         return self.filteredCountries.count;
         
     } else {
-        return [[[self.fetchedResultsController sections] objectAtIndex:sectiontableView] numberOfObjects];
+        NSInteger i = [[[self.fetchedResultsController sections] objectAtIndex:sectiontableView] numberOfObjects];
+        return i;
     }
 }
 
@@ -122,7 +122,6 @@
     }
     cell.textLabel.text       = obj.country;
     cell.detailTextLabel.text = [obj additionalInfo];
-    cell.accessoryType        = UITableViewCellAccessoryDisclosureIndicator;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -152,17 +151,15 @@
             [deletedCountry MR_deleteEntity];
             [self.filteredCountries removeObjectAtIndex:indexPath.row];
             
-        } else {
-            [[NSManagedObjectContext MR_defaultContext] deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
+            [self.tableView reloadData];
             
+        } else {
+            
+            [[NSManagedObjectContext MR_defaultContext] deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
         }
+        [[NSManagedObjectContext MR_defaultContext] deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
         [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
-//        NSError *error = nil;
-//        if (![[NSManagedObjectContext MR_defaultContext] save:&error]) {
-//            // handle error
-//        }
     }
-    [self.tableView reloadData];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -175,8 +172,6 @@
 - (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-
-    [self performSegueWithIdentifier:@"DetailPushSegue" sender:indexPath];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -204,16 +199,13 @@
     [self presentViewController:alert animated:YES completion:nil];
 }
 
-- (void)createNewObject
-{
-    [self performSegueWithIdentifier:@"AddInfoPushSegue" sender:self];
-    
-}
-
 #pragma mark - NSFetchedResultsControllerDelegate
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
 {
+    if (self.filteredCountries) {
+        return;
+    }
     // The fetch controller is about to start sending change notifications, so prepare the table view for updates.
     [self.tableView beginUpdates];
 }
@@ -224,7 +216,9 @@
      forChangeType:(NSFetchedResultsChangeType)type
       newIndexPath:(NSIndexPath *)newIndexPath
 {
-    
+    if (self.filteredCountries) {
+        return;
+    }
     UITableView *tableView = self.tableView;
     
     switch(type) {
@@ -241,6 +235,7 @@
         case NSFetchedResultsChangeUpdate:
         
             [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+            [tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
             
         case NSFetchedResultsChangeMove:
@@ -259,6 +254,9 @@
            atIndex:(NSUInteger)sectionIndex
      forChangeType:(NSFetchedResultsChangeType)type
 {
+    if (self.filteredCountries) {
+        return;
+    }
       UITableView *tableView = self.tableView;
     
     switch(type) {
@@ -277,23 +275,30 @@
 }
 
 
-- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+{
+    if (self.filteredCountries) {
+        return;
+    }
     // The fetch controller has sent all current change notifications, so tell the table view to process all updates.
     [self.tableView endUpdates];
 }
 
 #pragma mark - Storyboard
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(NSIndexPath *)indexPath
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    // Make sure your segue name in storyboard is the same as this line
-    if ([[segue identifier] isEqualToString:@"DetailPushSegue"])
-    {
+    // Make sure that segue name in storyboard is the same as this line
+    if ([[segue identifier] isEqualToString:@"DetailPushSegue"]) {
+        
+        // Get indexPath from storyboard for selected cell
+         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        
         // Get reference to the destination view controller
         DetailInfoController *detailInfo = [segue destinationViewController];
-        
+            
         // Pass any objects to the view controller here, like...
-        detailInfo.obj = self.filteredCountries ? [self.filteredCountries objectAtIndex:indexPath.row] : [self.fetchedResultsController objectAtIndexPath:indexPath];
+        detailInfo.obj = self.filteredCountries ? [self.filteredCountries objectAtIndex:indexPath.row] : [self.fetchedResultsController objectAtIndexPath:indexPath];;
     }
 }
 
@@ -343,6 +348,8 @@
     // 3. Reload the table to show the query results.
     [self.tableView reloadData];
 }
+
+
 
 
 @end
