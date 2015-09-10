@@ -10,12 +10,13 @@
 #import "DetailInfoController.h"
 #import "AddInfoController.h"
 #import "Country.h"
-#import <NSManagedObjectContext+MagicalSaves.h>
-#import <MagicalRecord+ShorthandMethods.h>
+#import "CountryAppModel.h"
 
-@interface CountryViewController ()
+@interface CountryViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+@property (strong, nonatomic) NSMutableArray *filteredCountries;
 
 @end
 
@@ -32,9 +33,6 @@
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         exit(-1);  // Fail
     }
-    
-    self.title = @"Countries";
-
     self.navigationItem.leftBarButtonItem  = self.editButtonItem;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStylePlain target:self action:@selector(createNewObject)];
 }
@@ -74,7 +72,7 @@
                                                                                                     sectionNameKeyPath:@"continent"
                                                                                                              cacheName:nil];
     self.fetchedResultsController = theFetchedResultsController;
-    _fetchedResultsController.delegate = self;
+//    _fetchedResultsController.delegate = self;
     
     return _fetchedResultsController;
     
@@ -84,34 +82,60 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return [[self.fetchedResultsController sections] count];
+    if (self.filteredCountries) {
+        return 1;
+        
+    } else {
+        return [[self.fetchedResultsController sections] count];
+    }
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return [[[self.fetchedResultsController sections] objectAtIndex:section] name];
+    if (self.filteredCountries) {
+        return nil;
+        
+    } else {
+        return [[[self.fetchedResultsController sections] objectAtIndex:section] name];
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)sectiontableView
 {
-    return [[[self.fetchedResultsController sections] objectAtIndex:sectiontableView] numberOfObjects];
+    if (self.filteredCountries) {
+        return self.filteredCountries.count;
+        
+    } else {
+        return [[[self.fetchedResultsController sections] objectAtIndex:sectiontableView] numberOfObjects];
+    }
 }
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    Country *obj              = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    Country *obj;
+    
+    if (self.filteredCountries) {
+        obj = [self.filteredCountries objectAtIndex:indexPath.row];
+    } else {
+        obj = [self.fetchedResultsController objectAtIndexPath:indexPath];
+       
+    }
     cell.textLabel.text       = obj.country;
     cell.detailTextLabel.text = [obj additionalInfo];
-    
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    cell.accessoryType        = UITableViewCellAccessoryDisclosureIndicator;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"identifier"];
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"identifier"];
+    
+    // for ios 8
+    if ([cell respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)]) {
+        [cell setPreservesSuperviewLayoutMargins:NO];
+        [cell setLayoutMargins:UIEdgeInsetsZero];
     }
+    // for ios 7
+    [cell setSeparatorInset:UIEdgeInsetsZero];
     
     [self configureCell:cell atIndexPath:indexPath];
     return cell;
@@ -122,14 +146,23 @@
     
     if (editingStyle == UITableViewCellEditingStyleDelete)
     {
-        [[NSManagedObjectContext MR_defaultContext] deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
-        [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
-        
-        NSError *error = nil;
-        if (![[NSManagedObjectContext MR_defaultContext] save:&error]) {
-            // handle error
+        if (self.filteredCountries) {
+            
+            Country *deletedCountry = [Country MR_findFirstByAttribute:@"country" withValue:[[self.filteredCountries objectAtIndex:indexPath.row] country]];
+            [deletedCountry MR_deleteEntity];
+            [self.filteredCountries removeObjectAtIndex:indexPath.row];
+            
+        } else {
+            [[NSManagedObjectContext MR_defaultContext] deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
+            
         }
+        [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+//        NSError *error = nil;
+//        if (![[NSManagedObjectContext MR_defaultContext] save:&error]) {
+//            // handle error
+//        }
     }
+    [self.tableView reloadData];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -142,9 +175,7 @@
 - (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-//    DetailInfoController *detailInfo = [[DetailInfoController alloc] init];
-//    [self.navigationController pushViewController:detailInfo animated:YES];// detailViewController
-//    detailInfo.obj = [self.fetchedResultsController objectAtIndexPath:indexPath];
+
     [self performSegueWithIdentifier:@"DetailPushSegue" sender:indexPath];
 }
 
@@ -160,7 +191,7 @@
  *  @param country show which country is selected
  */
 
-- (void)showAlert:(NSString*)country
+- (void)showAlert:(NSString *)country
 {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"CountryApp"
                                                                     message:[NSString stringWithFormat:@"You selected %@",country]
@@ -175,9 +206,6 @@
 
 - (void)createNewObject
 {
-//    AddInfoController *addInfoController = [[AddInfoController alloc] init];
-//    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:addInfoController];
-//    [self presentViewController:navigationController animated:YES completion:nil];
     [self performSegueWithIdentifier:@"AddInfoPushSegue" sender:self];
     
 }
@@ -207,9 +235,11 @@
             
         case NSFetchedResultsChangeDelete:
             [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            
             break;
             
         case NSFetchedResultsChangeUpdate:
+        
             [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
             break;
             
@@ -219,9 +249,8 @@
             break;
             
         default:
-            break;
+        break;
     }
-    
 }
 
 
@@ -255,7 +284,7 @@
 
 #pragma mark - Storyboard
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(NSIndexPath *)indexPath
 {
     // Make sure your segue name in storyboard is the same as this line
     if ([[segue identifier] isEqualToString:@"DetailPushSegue"])
@@ -264,8 +293,56 @@
         DetailInfoController *detailInfo = [segue destinationViewController];
         
         // Pass any objects to the view controller here, like...
-        detailInfo.obj = [self.fetchedResultsController objectAtIndexPath:sender];
+        detailInfo.obj = self.filteredCountries ? [self.filteredCountries objectAtIndex:indexPath.row] : [self.fetchedResultsController objectAtIndexPath:indexPath];
     }
 }
+
+#pragma mark - Search Bar Delegate
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    if ([self.searchBar.text length] > 0) {
+        [self doSearch];
+    } else {
+        self.filteredCountries = [[Country MR_findAll] mutableCopy];
+        [self.tableView reloadData];
+    }
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    [self.searchBar resignFirstResponder];
+    // Clear search bar text
+    self.searchBar.text = @"";
+    self.filteredCountries = nil;
+    // Hide the cancel button
+    self.searchBar.showsCancelButton = NO;
+    
+    [self.tableView reloadData];
+}
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+{
+    self.searchBar.showsCancelButton = YES;
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    [self.searchBar resignFirstResponder];
+    [self doSearch];
+}
+
+- (void)doSearch
+{
+    // 1. Get the text from the search bar.
+    NSString *searchText = self.searchBar.text;
+    
+    NSArray *countries = [self.fetchedResultsController fetchedObjects];
+    self.filteredCountries = [NSMutableArray arrayWithArray:[countries filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"country contains[c] %@", searchText]]];
+    
+    // 3. Reload the table to show the query results.
+    [self.tableView reloadData];
+}
+
 
 @end

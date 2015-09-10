@@ -12,13 +12,11 @@
 
 @interface Country : NSManagedObject
 
-- (NSString*)additionalInfo;
-
 @property (nonatomic, retain) NSString * continent;
 @property (nonatomic, retain) NSString * country;
 @property (nonatomic, retain) NSString * capital;
 @property (nonatomic, retain) NSNumber * population;
 
 + (Country*)countryInfoWithContinent:(NSString*)continent country:(NSString*)country capital:(NSString*)capital population:(NSNumber*)population;
-
+- (NSString*)additionalInfo;
 @end

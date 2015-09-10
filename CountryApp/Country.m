@@ -7,7 +7,7 @@
 //
 
 #import "Country.h"
-#import "NSManagedObject+MagicalRecord.h"
+#import "MagicalRecord.h"
 
 @implementation Country
 

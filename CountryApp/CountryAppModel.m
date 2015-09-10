@@ -19,16 +19,8 @@
 
 @implementation CountryAppModel
 
-//- (id)init
-//{
-//    self = [super init];
-//    if (self) {
-//  
-//    }
-//    return self;
-//}
-
-+ (CountryAppModel*)sharedInstance                     /*singleTon*/
+ // singleTon
++ (CountryAppModel*)sharedInstance
 {
     static CountryAppModel *_sharedInstance = nil;
     // dispatch_once_t type is long
@@ -68,4 +60,5 @@
         [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     }
 }
+
 @end
