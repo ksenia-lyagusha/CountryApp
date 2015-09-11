@@ -12,9 +12,8 @@
 #import "Country.h"
 #import "CountryAppModel.h"
 
-@interface CountryViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
+@interface CountryViewController () <UISearchBarDelegate>
 
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (strong, nonatomic) NSMutableArray *filteredCountries;
 
@@ -40,12 +39,6 @@
 {
     [super viewWillAppear:animated];
     [self.tableView reloadData];
-}
-
-- (void)setEditing:(BOOL)editing animated:(BOOL)animated
-{
-    [super setEditing:editing animated:animated];
-    [self.tableView setEditing:editing animated:YES];
 }
 
 - (NSFetchedResultsController *)fetchedResultsController
@@ -150,33 +143,22 @@
             Country *deletedCountry = [Country MR_findFirstByAttribute:@"country" withValue:[[self.filteredCountries objectAtIndex:indexPath.row] country]];
             [deletedCountry MR_deleteEntity];
             [self.filteredCountries removeObjectAtIndex:indexPath.row];
-            
             [self.tableView reloadData];
             
         } else {
             
             [[NSManagedObjectContext MR_defaultContext] deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
         }
-        [[NSManagedObjectContext MR_defaultContext] deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
+//        [[NSManagedObjectContext MR_defaultContext] deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
         [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     }
 }
 
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return YES;
-}
- 
 #pragma mark - Delegate
 
-- (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+- (UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 50;
+    return [[UIView alloc] init];
 }
 
 #pragma mark - Helpers

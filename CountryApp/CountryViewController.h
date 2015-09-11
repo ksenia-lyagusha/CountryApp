@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "MagicalRecord.h"
 
-@interface CountryViewController : UIViewController <NSFetchedResultsControllerDelegate>
+@interface CountryViewController : UITableViewController <NSFetchedResultsControllerDelegate>
 @property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
 
 @end
