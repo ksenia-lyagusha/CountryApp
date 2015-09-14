@@ -17,14 +17,14 @@
 @dynamic population;
 @dynamic continent;
 
-+ (Country*)countryWithContinent:(id)continent country:(NSString *)country capital:(NSString *)capital population:(NSNumber *)population
++ (Country*)countryWithContinentOrContinentTitle:(id)continent country:(NSString *)country capital:(NSString *)capital population:(NSNumber *)population
 {
     Country *countryInfo   = [Country MR_createEntity];
     countryInfo.continent  = [continent isMemberOfClass:([Continent class])] ? continent : [Continent MR_findFirstByAttribute:@"title" withValue:continent];
     countryInfo.title      = country;
     countryInfo.capital    = capital;
     countryInfo.population = population;
-
+    
     return countryInfo;
 }
 

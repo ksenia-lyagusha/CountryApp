@@ -19,5 +19,16 @@
 @property (nonatomic, retain) Continent *continent;
 
 - (NSString*)additionalInfo;
-+ (Country*)countryWithContinent:(id)continent country:(NSString *)country capital:(NSString *)capital population:(NSNumber *)population;
+
+/**
+ *  Creates a new Country object in DB
+ *
+ *  @param continent  id, either can receive type Continent, if Continent already exist or NSString contninentTitle, if need to fetch object from DB
+ *  @param country    NSString name of the country
+ *  @param capital    NSString name of the capital
+ *  @param population NSNumber number of population
+ *
+ *  @return Country object
+ */
++ (Country*)countryWithContinentOrContinentTitle:(id)continent country:(NSString *)country capital:(NSString *)capital population:(NSNumber *)population;
 @end

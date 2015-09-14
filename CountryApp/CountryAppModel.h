@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface CountryAppModel : NSObject
+
 + (CountryAppModel*)sharedInstance;
 - (void)readingData;
 

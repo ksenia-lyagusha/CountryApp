@@ -68,7 +68,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.93147332869999999" green="0.93781565659999999" blue="0.29695407229999998" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="AxB-6j-n3P" firstAttribute="centerY" secondItem="i93-YC-vod" secondAttribute="bottom" multiplier="0.8" id="2R8-C6-KdJ"/>
                             <constraint firstItem="lAm-Ri-Nxj" firstAttribute="leading" secondItem="qZA-bG-PAg" secondAttribute="leading" id="4Rn-dS-aeW"/>
@@ -151,18 +151,27 @@
                                                 <color key="textColor" red="0.92509075129999996" green="0.23599251469999999" blue="0.65357945490000002" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <textInputTraits key="textInputTraits" returnKeyType="next"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="8cV-GS-Uds" id="rw4-g9-lFe"/>
+                                                </connections>
                                             </textField>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="New Capital" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="oU2-Nv-noe">
                                                 <rect key="frame" x="118" y="275" width="170" height="30"/>
                                                 <color key="textColor" red="0.92509075129999996" green="0.23599251469999999" blue="0.65357945490000002" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <textInputTraits key="textInputTraits" returnKeyType="next"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="8cV-GS-Uds" id="tCd-dU-FCS"/>
+                                                </connections>
                                             </textField>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Population" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="R81-xT-sBG">
                                                 <rect key="frame" x="118" y="388" width="170" height="30"/>
                                                 <color key="textColor" red="0.92509075129999996" green="0.23599251469999999" blue="0.65357945490000002" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" returnKeyType="done"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="8cV-GS-Uds" id="4mJ-6D-wti"/>
+                                                </connections>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Continent" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dCo-dQ-KE3">
                                                 <rect key="frame" x="32" y="70" width="75" height="21"/>
@@ -206,7 +215,7 @@
                                         </constraints>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.93147332869999999" green="0.93781565659999999" blue="0.29695407229999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="V7Q-Sc-QxA" firstAttribute="top" secondItem="TBq-Ae-QE1" secondAttribute="top" id="2cr-mu-saw"/>
                                     <constraint firstAttribute="trailing" secondItem="V7Q-Sc-QxA" secondAttribute="trailing" id="AMw-b5-31d"/>

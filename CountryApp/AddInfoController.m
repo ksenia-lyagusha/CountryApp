@@ -13,7 +13,7 @@
 
 #define allTrim(object) [object stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]
 
-@interface AddInfoController()
+@interface AddInfoController() <UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIPickerView *pickerView;
 @property (weak, nonatomic) IBOutlet UITextField *countryField;
@@ -72,9 +72,9 @@
 
 - (IBAction)backAndSave:(UIBarButtonItem *)sender
 {
-    if (sender == self.navigationItem.leftBarButtonItem){
+    if (sender == self.navigationItem.leftBarButtonItem) {
         [self dismissViewControllerAnimated:YES completion:nil];
-        
+    
     } else if ([allTrim(self.countryField.text) length] == 0 || [allTrim(self.capitalField.text) length] == 0 || [allTrim(self.populationField.text) length] == 0) {
         
         NSMutableArray *array = [NSMutableArray arrayWithObjects:self.countryField, self.capitalField, self.populationField, nil];
@@ -94,16 +94,15 @@
     } else if (sender == self.navigationItem.rightBarButtonItem) {
         NSInteger index = [self.pickerView selectedRowInComponent:0];
         
-        [Country countryWithContinent:[self.continents objectAtIndex:index]
-                              country:self.countryField.text
-                              capital:self.capitalField.text
-                           population:@([self.populationField.text integerValue])];
+        [Country countryWithContinentOrContinentTitle:[self.continents objectAtIndex:index]
+                                              country:self.countryField.text
+                                              capital:self.capitalField.text
+                                           population:@([self.populationField.text integerValue])];
         
         [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
-        
         [self dismissViewControllerAnimated:YES completion:nil];
     }
-
+    [self.view endEditing:YES];
 }
 
 - (void)showAlert:(NSString*)string
@@ -124,18 +123,22 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
+    NSCharacterSet *cs;
+    
     if (textField == self.populationField)
     {
-        NSCharacterSet *cs = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
-        
-        NSString *filtered = [[string componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
+        cs = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
         
         if (self.populationField.text.length > 18) {
             return NO;
         }
-        return [string isEqualToString:filtered];
+   
+    } else {
+       cs = [[NSCharacterSet letterCharacterSet] invertedSet];
     }
-    return  YES;
+    NSString *filtered = [[string componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
+    return [string isEqualToString:filtered];
+//    return  YES;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField*)textField

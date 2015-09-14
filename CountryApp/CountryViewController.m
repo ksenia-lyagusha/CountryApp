@@ -13,13 +13,12 @@
 #import "Continent.h"
 #import "CountryAppModel.h"
 
-@interface CountryViewController () <UISearchBarDelegate>
+@interface CountryViewController () <UISearchBarDelegate, NSFetchedResultsControllerDelegate>
 
 
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 
 @property (strong, nonatomic) NSMutableArray *filteredCountries;
-@property (strong, nonatomic) UISearchController *searchController;
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 
 @end
@@ -51,24 +50,12 @@
     if (_fetchedResultsController != nil) {
         return _fetchedResultsController;
     }
-    
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity  = [NSEntityDescription entityForName:@"Country" inManagedObjectContext:[NSManagedObjectContext MR_defaultContext]];
-    [fetchRequest setEntity:entity];
-
-    NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:@"continent.title" ascending:YES];
-    NSSortDescriptor *sort2 = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:YES];
-    NSArray *arr = [NSArray arrayWithObjects:sort, sort2, nil];
-    [fetchRequest setSortDescriptors:arr];
-    
-    [fetchRequest setFetchBatchSize:20];
-    
-    NSFetchedResultsController *theFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
-                                                                                                  managedObjectContext:[NSManagedObjectContext MR_defaultContext]
-                                                                                                    sectionNameKeyPath:@"continent.title"
-                                                                                                             cacheName:nil];
-    self.fetchedResultsController = theFetchedResultsController;
-    _fetchedResultsController.delegate = self;
+    self.fetchedResultsController = [Country MR_fetchAllSortedBy:@"continent.title,title"
+                                                       ascending:YES
+                                                   withPredicate:nil
+                                                         groupBy:@"continent.title"
+                                                        delegate:self
+                                                       inContext:[NSManagedObjectContext MR_defaultContext]];
     
     return _fetchedResultsController;
     

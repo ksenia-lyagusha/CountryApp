@@ -28,32 +28,26 @@
     return _sharedInstance;
 }
 
-- (void)fillArray
+- (void)addCountryObjects
 {
-    NSMutableArray *allValues = [NSMutableArray array];
     NSString *defaultPath = [[NSBundle mainBundle] pathForResource:@"CountriesAndCapitals" ofType:@"plist"];
     NSArray *countryObj = [NSMutableArray arrayWithContentsOfFile:defaultPath];
     for (NSDictionary *informationOfCountry in countryObj) {
       
-        Country *obj = [Country countryWithContinent:informationOfCountry[@"continent"]
+       [Country countryWithContinentOrContinentTitle:informationOfCountry[@"continent"]
                                              country:informationOfCountry[@"country"]
                                              capital:informationOfCountry[@"capital"]
                                           population:informationOfCountry[@"population"]];
-        [allValues addObject:obj];
     }
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setBool:YES forKey:kIsEnter];
 }
 
-- (void)addContinents
+- (void)addContinentObjects
 {
-    NSMutableArray *allValues = [NSMutableArray array];
     NSString *defaultContinents = [[NSBundle mainBundle] pathForResource:@"Continents" ofType:@"plist"];
     NSArray *continentObj = [NSMutableArray arrayWithContentsOfFile:defaultContinents];
     for (NSString *continent in continentObj) {
-        Continent *continentObj = [Continent continentWithTitle:continent];
-        [allValues addObject:continentObj];
+        
+       [Continent continentWithTitle:continent];
     }
 }
 
@@ -62,10 +56,11 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     BOOL isSecond = [defaults boolForKey:kIsEnter];
     if (!isSecond) {
-        [self addContinents];
-        [self fillArray];
-    
+        [self addContinentObjects];
+        [self addCountryObjects];
+        
         [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+        [defaults setBool:YES forKey:kIsEnter];
     }
 }
 

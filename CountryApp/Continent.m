@@ -20,7 +20,6 @@
 {
     Continent *obj = [Continent MR_createEntity];
     obj.title = continent;
-    
     return obj;
 }
 

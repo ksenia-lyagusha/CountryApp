@@ -25,7 +25,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor yellowColor];
     self.title = self.obj.title;
     self.continent.text = self.obj.continent.title;
     self.country.text = self.obj.title;
