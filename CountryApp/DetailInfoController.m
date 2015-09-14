@@ -9,6 +9,7 @@
 #import "DetailInfoController.h"
 #import "MagicalRecord.h"
 #import "CountryViewController.h"
+#import "Continent.h"
 
 @interface DetailInfoController ()
 
@@ -25,9 +26,9 @@
 {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor yellowColor];
-    self.title = self.obj.country;
-    self.continent.text = self.obj.continent;
-    self.country.text = self.obj.country;
+    self.title = self.obj.title;
+    self.continent.text = self.obj.continent.title;
+    self.country.text = self.obj.title;
     self.capital.text = self.obj.capital;
     self.population.text = [NSString stringWithFormat:@"%@", self.obj.population ?: @""];
 }

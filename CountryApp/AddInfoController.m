@@ -8,6 +8,7 @@
 
 #import "AddInfoController.h"
 #import "Country.h"
+#import "Continent.h"
 #import "MagicalRecord.h"
 
 #define allTrim(object) [object stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]
@@ -18,8 +19,9 @@
 @property (weak, nonatomic) IBOutlet UITextField *countryField;
 @property (weak, nonatomic) IBOutlet UITextField *capitalField;
 @property (weak, nonatomic) IBOutlet UITextField *populationField;
-@property (strong, nonatomic) NSArray *dataSource;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+
+@property (strong, nonatomic) NSArray *continents;
 
 @end
 
@@ -29,14 +31,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.dataSource = [NSArray arrayWithObjects:
-                       @"Africa",
-                       @"Asia",
-                       @"Australia",
-                       @"Europe",
-                       @"North America",
-                       @"South America", nil];
+
+    self.continents = [Continent MR_findAllSortedBy:@"title" ascending:YES];
 }
 
 -  (void)viewWillAppear:(BOOL)animated
@@ -98,11 +94,10 @@
     } else if (sender == self.navigationItem.rightBarButtonItem) {
         NSInteger index = [self.pickerView selectedRowInComponent:0];
         
-        Country *entity   = [Country MR_createEntity];
-        entity.continent  = [self.dataSource objectAtIndex:index];
-        entity.country    = self.countryField.text;
-        entity.capital    = self.capitalField.text;
-        entity.population = @([self.populationField.text integerValue]);
+        [Country countryWithContinent:[self.continents objectAtIndex:index]
+                              country:self.countryField.text
+                              capital:self.capitalField.text
+                           population:@([self.populationField.text integerValue])];
         
         [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
         
@@ -165,14 +160,16 @@
 
 - (NSInteger)pickerView:(UIPickerView *)thePickerView numberOfRowsInComponent:(NSInteger)component
 {
-    return self.dataSource.count;
+    return [self.continents count];
 }
 
 #pragma mark - UIPickerViewDelegate
 
 - (NSString*)pickerView:(UIPickerView*)thePickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    return [self.dataSource objectAtIndex:row];
+    Continent *continent = [self.continents objectAtIndex:row];
+    NSString *str = continent.title;
+    return str;
 }
 
 @end

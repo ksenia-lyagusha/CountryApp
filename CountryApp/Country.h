@@ -1,22 +1,23 @@
 //
 //  Country.h
-//  CountryApp
+//  
 //
-//  Created by Оксана on 29.08.15.
-//  Copyright (c) 2015 ITCraft. All rights reserved.
+//  Created by Оксана on 10.09.15.
+//
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+@class Continent;
 
 @interface Country : NSManagedObject
 
-@property (nonatomic, retain) NSString * continent;
-@property (nonatomic, retain) NSString * country;
 @property (nonatomic, retain) NSString * capital;
+@property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) NSNumber * population;
+@property (nonatomic, retain) Continent *continent;
 
-+ (Country*)countryInfoWithContinent:(NSString*)continent country:(NSString*)country capital:(NSString*)capital population:(NSNumber*)population;
 - (NSString*)additionalInfo;
++ (Country*)countryWithContinent:(id)continent country:(NSString *)country capital:(NSString *)capital population:(NSNumber *)population;
 @end

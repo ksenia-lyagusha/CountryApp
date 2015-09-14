@@ -8,14 +8,10 @@
 
 #import "CountryAppModel.h"
 #import "Country.h"
+#import "Continent.h"
 #import "MagicalRecord.h"
 
 #define kIsEnter @"Counter"
-
-@interface CountryAppModel ()
-@property (strong, nonatomic) NSArray *continents;
-
-@end
 
 @implementation CountryAppModel
 
@@ -32,21 +28,33 @@
     return _sharedInstance;
 }
 
-- (NSMutableArray*)fillArray
+- (void)fillArray
 {
     NSMutableArray *allValues = [NSMutableArray array];
-    for (NSDictionary *informationOfCountry in self.continents) {
-        
-        Country *obj = [Country countryInfoWithContinent:informationOfCountry[@"continent"]
-                                                 country:informationOfCountry[@"country"]
-                                                 capital:informationOfCountry[@"capital"]
-                                              population:informationOfCountry[@"population"]];
+    NSString *defaultPath = [[NSBundle mainBundle] pathForResource:@"CountriesAndCapitals" ofType:@"plist"];
+    NSArray *countryObj = [NSMutableArray arrayWithContentsOfFile:defaultPath];
+    for (NSDictionary *informationOfCountry in countryObj) {
+      
+        Country *obj = [Country countryWithContinent:informationOfCountry[@"continent"]
+                                             country:informationOfCountry[@"country"]
+                                             capital:informationOfCountry[@"capital"]
+                                          population:informationOfCountry[@"population"]];
         [allValues addObject:obj];
     }
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setBool:YES forKey:kIsEnter];
-    return  allValues;
+}
+
+- (void)addContinents
+{
+    NSMutableArray *allValues = [NSMutableArray array];
+    NSString *defaultContinents = [[NSBundle mainBundle] pathForResource:@"Continents" ofType:@"plist"];
+    NSArray *continentObj = [NSMutableArray arrayWithContentsOfFile:defaultContinents];
+    for (NSString *continent in continentObj) {
+        Continent *continentObj = [Continent continentWithTitle:continent];
+        [allValues addObject:continentObj];
+    }
 }
 
 - (void)readingData
@@ -54,9 +62,9 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     BOOL isSecond = [defaults boolForKey:kIsEnter];
     if (!isSecond) {
-        NSString *defaultPath = [[NSBundle mainBundle] pathForResource:@"CountriesAndCapitals" ofType:@"plist"];
-        self.continents = [NSMutableArray arrayWithContentsOfFile:defaultPath];
-        self.continents = [self fillArray];
+        [self addContinents];
+        [self fillArray];
+    
         [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     }
 }

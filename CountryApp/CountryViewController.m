@@ -10,12 +10,17 @@
 #import "DetailInfoController.h"
 #import "AddInfoController.h"
 #import "Country.h"
+#import "Continent.h"
 #import "CountryAppModel.h"
 
 @interface CountryViewController () <UISearchBarDelegate>
 
+
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+
 @property (strong, nonatomic) NSMutableArray *filteredCountries;
+@property (strong, nonatomic) UISearchController *searchController;
+@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 
 @end
 
@@ -38,7 +43,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self.tableView reloadData];
 }
 
 - (NSFetchedResultsController *)fetchedResultsController
@@ -51,9 +55,9 @@
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity  = [NSEntityDescription entityForName:@"Country" inManagedObjectContext:[NSManagedObjectContext MR_defaultContext]];
     [fetchRequest setEntity:entity];
-    
-    NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:@"continent" ascending:YES];
-    NSSortDescriptor *sort2 = [[NSSortDescriptor alloc] initWithKey:@"country" ascending:YES];
+
+    NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:@"continent.title" ascending:YES];
+    NSSortDescriptor *sort2 = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:YES];
     NSArray *arr = [NSArray arrayWithObjects:sort, sort2, nil];
     [fetchRequest setSortDescriptors:arr];
     
@@ -61,7 +65,7 @@
     
     NSFetchedResultsController *theFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                                                                                   managedObjectContext:[NSManagedObjectContext MR_defaultContext]
-                                                                                                    sectionNameKeyPath:@"continent"
+                                                                                                    sectionNameKeyPath:@"continent.title"
                                                                                                              cacheName:nil];
     self.fetchedResultsController = theFetchedResultsController;
     _fetchedResultsController.delegate = self;
@@ -113,7 +117,7 @@
         obj = [self.fetchedResultsController objectAtIndexPath:indexPath];
        
     }
-    cell.textLabel.text       = obj.country;
+    cell.textLabel.text       = obj.title;
     cell.detailTextLabel.text = [obj additionalInfo];
 }
 
@@ -139,17 +143,15 @@
     if (editingStyle == UITableViewCellEditingStyleDelete)
     {
         if (self.filteredCountries) {
-            
-            Country *deletedCountry = [Country MR_findFirstByAttribute:@"country" withValue:[[self.filteredCountries objectAtIndex:indexPath.row] country]];
-            [deletedCountry MR_deleteEntity];
+            Country *countryObj = [self.filteredCountries objectAtIndex:indexPath.row];
+            [countryObj MR_deleteEntity];
             [self.filteredCountries removeObjectAtIndex:indexPath.row];
             [self.tableView reloadData];
-            
+      
         } else {
             
             [[NSManagedObjectContext MR_defaultContext] deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
         }
-//        [[NSManagedObjectContext MR_defaultContext] deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
         [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     }
 }
@@ -325,13 +327,10 @@
     NSString *searchText = self.searchBar.text;
     
     NSArray *countries = [self.fetchedResultsController fetchedObjects];
-    self.filteredCountries = [NSMutableArray arrayWithArray:[countries filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"country contains[c] %@", searchText]]];
+    self.filteredCountries = [NSMutableArray arrayWithArray:[countries filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"title contains[c] %@", searchText]]];
     
     // 3. Reload the table to show the query results.
     [self.tableView reloadData];
 }
-
-
-
 
 @end
