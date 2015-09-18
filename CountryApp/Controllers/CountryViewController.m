@@ -12,6 +12,7 @@
 #import "Country.h"
 #import "Continent.h"
 #import "CountryAppModel.h"
+#import "FlagLoading.h"
 
 @interface CountryViewController () <UISearchBarDelegate, NSFetchedResultsControllerDelegate>
 
@@ -104,8 +105,18 @@
         obj = [self.fetchedResultsController objectAtIndexPath:indexPath];
        
     }
-    cell.textLabel.text       = obj.title;
-    cell.detailTextLabel.text = [obj additionalInfo];
+    
+    UIImageView *countryFlag = (UIImageView *)[cell viewWithTag:100];
+    
+    UIImage *image = [UIImage imageWithData:obj.image];
+    countryFlag.image = image;
+    
+    NSString *code = [CountryAppModel searchCountryCode:obj.title];
+    UILabel *countryTitle = (UILabel *)[cell viewWithTag:101];
+    countryTitle.text     = [NSString stringWithFormat:@"%@ (%@)", obj.title, [code uppercaseString]];
+    
+    UILabel *capitalTitle = (UILabel *)[cell viewWithTag:102];
+    capitalTitle.text     = [obj additionalInfo];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -126,7 +137,6 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     if (editingStyle == UITableViewCellEditingStyleDelete)
     {
         if (self.filteredCountries) {
@@ -219,7 +229,6 @@
     }
 }
 
-
 - (void)controller:(NSFetchedResultsController *)controller
   didChangeSection:(id)sectionInfo
            atIndex:(NSUInteger)sectionIndex
@@ -244,7 +253,6 @@
             break;
     }
 }
-
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {

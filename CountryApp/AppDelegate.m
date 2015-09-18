@@ -21,7 +21,7 @@
 {
     [MagicalRecord setupCoreDataStack];
     
-    [[CountryAppModel sharedInstance] readingData];
+    [[CountryAppModel sharedInstance] readData];
     
     return YES;
 }

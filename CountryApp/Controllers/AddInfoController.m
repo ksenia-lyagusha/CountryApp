@@ -10,8 +10,8 @@
 #import "Country.h"
 #import "Continent.h"
 #import "MagicalRecord.h"
-
-#define allTrim(object) [object stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]
+#import "FlagLoading.h"
+#import "CountryAppModel.h"
 
 @interface AddInfoController() <UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
 
@@ -20,6 +20,10 @@
 @property (weak, nonatomic) IBOutlet UITextField *capitalField;
 @property (weak, nonatomic) IBOutlet UITextField *populationField;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UIImageView *imageView;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *layoutHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *layoutWidth;
 
 @property (strong, nonatomic) NSArray *continents;
 
@@ -33,6 +37,8 @@
     [super viewDidLoad];
 
     self.continents = [Continent MR_findAllSortedBy:@"title" ascending:YES];
+    self.imageView.layer.cornerRadius = 4.0;
+    self.imageView.layer.masksToBounds = YES;
 }
 
 -  (void)viewWillAppear:(BOOL)animated
@@ -75,14 +81,14 @@
     if (sender == self.navigationItem.leftBarButtonItem) {
         [self dismissViewControllerAnimated:YES completion:nil];
     
-    } else if ([allTrim(self.countryField.text) length] == 0 || [allTrim(self.capitalField.text) length] == 0 || [allTrim(self.populationField.text) length] == 0) {
+    } else if ([self.countryField.text isEqualToString:@""] || [self.capitalField.text isEqualToString:@""] || [self.populationField.text isEqualToString:@""]) {
         
         NSMutableArray *array = [NSMutableArray arrayWithObjects:self.countryField, self.capitalField, self.populationField, nil];
         
         NSMutableArray *otherArray = [NSMutableArray array];
         NSString *str;
         for (UITextField *textField in array) {
-            if ([allTrim(textField.text) length] == 0) {
+            if ([textField.text isEqualToString:@""]) {
                 [otherArray addObject:textField.placeholder];
                 str = [otherArray componentsJoinedByString:@", "];
                 str = str.lowercaseString;
@@ -94,12 +100,15 @@
     } else if (sender == self.navigationItem.rightBarButtonItem) {
         NSInteger index = [self.pickerView selectedRowInComponent:0];
         
-        [Country countryWithContinentOrContinentTitle:[self.continents objectAtIndex:index]
+        self.capitalField.text = [self.capitalField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        self.countryField.text = [self.countryField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        Country *country = [Country MR_createEntity];
+        [country countryWithContinentOrContinentTitle:[self.continents objectAtIndex:index]
                                               country:self.countryField.text
                                               capital:self.capitalField.text
                                            population:@([self.populationField.text integerValue])];
         
-        [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+        [country addImageObject:self.imageView.image];
         [self dismissViewControllerAnimated:YES completion:nil];
     }
     [self.view endEditing:YES];
@@ -111,7 +120,7 @@
                                                                    message:[NSString stringWithFormat: @"Sorry, but you have %@ empty fields. Please, fill them in", string]
                                                             preferredStyle:UIAlertControllerStyleAlert];
     
-    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK"
+    UIAlertAction *okAction  = [UIAlertAction actionWithTitle:@"OK"
                                                        style:UIAlertActionStyleDefault
                                                      handler:nil];
     [alert addAction:okAction];
@@ -124,29 +133,30 @@
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     NSCharacterSet *cs;
+    NSString *filtered;
     
-    if (textField == self.populationField)
-    {
+    if (textField == self.populationField) {
         cs = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
-        
+        filtered = [[string componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
         if (self.populationField.text.length > 18) {
             return NO;
         }
-   
-    } else {
-       cs = [[NSCharacterSet letterCharacterSet] invertedSet];
-    }
-    NSString *filtered = [[string componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
     return [string isEqualToString:filtered];
-//    return  YES;
+    }
+    
+    return YES;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField*)textField
 {
     if ([textField isEqual:self.countryField]) {
+        self.countryField.text = [self.countryField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        [self imageDownload];
         [self.capitalField becomeFirstResponder];
+        
     } else if ([textField isEqual:self.capitalField]) {
         [self.populationField becomeFirstResponder];
+        
     } else {
         [textField resignFirstResponder];
     }
@@ -174,5 +184,31 @@
     NSString *str = continent.title;
     return str;
 }
+
+#pragma mark - Others
+
+- (void)imageDownload
+{
+    FlagLoading *flagLoading = [[FlagLoading alloc] init];
+    
+    NSString *code = [CountryAppModel searchCountryCode:self.countryField.text];
+    NSString *link = [flagLoading formatSiteLink:code];
+    
+    if (code) {
+    
+        [flagLoading sendRequest:link withImageHandler:^(UIImage * image) {
+            
+            CGFloat ratio = image.size.height / self.layoutHeight.constant;
+            CGFloat newWidth = image.size.width / ratio;
+            self.layoutWidth.constant = newWidth;
+
+            self.imageView.image = image;
+            if (!self.imageView.image) {
+                self.imageView.image = [UIImage imageNamed:@"01"];
+            }
+        }];
+    }
+}
+
 
 @end

@@ -11,6 +11,7 @@
 @interface CountryAppModel : NSObject
 
 + (CountryAppModel*)sharedInstance;
-- (void)readingData;
+- (void)readData;
++ (NSString *)searchCountryCode:(NSString *)countryTitle;
 
 @end

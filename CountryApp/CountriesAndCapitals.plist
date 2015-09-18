@@ -46,9 +46,9 @@
 		<key>continent</key>
 		<string>Africa</string>
 		<key>country</key>
-		<string>Tunis</string>
+		<string>Tunisia</string>
 		<key>capital</key>
-		<string>Tunius</string>
+		<string>Tunis</string>
 	</dict>
 	<dict>
 		<key>continent</key>
@@ -62,7 +62,7 @@
 		<key>continent</key>
 		<string>Africa</string>
 		<key>country</key>
-		<string>RSA</string>
+		<string>South Africa</string>
 		<key>capital</key>
 		<string>Pretoria</string>
 		<key>population</key>

@@ -34,10 +34,13 @@
     NSArray *countryObj = [NSMutableArray arrayWithContentsOfFile:defaultPath];
     for (NSDictionary *informationOfCountry in countryObj) {
       
-       [Country countryWithContinentOrContinentTitle:informationOfCountry[@"continent"]
+        Country *country = [Country MR_createEntity];
+        
+       [country countryWithContinentOrContinentTitle:informationOfCountry[@"continent"]
                                              country:informationOfCountry[@"country"]
                                              capital:informationOfCountry[@"capital"]
                                           population:informationOfCountry[@"population"]];
+        [country downloadImage];
     }
 }
 
@@ -51,7 +54,7 @@
     }
 }
 
-- (void)readingData
+- (void)readData
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     BOOL isSecond = [defaults boolForKey:kIsEnter];
@@ -59,9 +62,26 @@
         [self addContinentObjects];
         [self addCountryObjects];
         
-        [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+//        [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
         [defaults setBool:YES forKey:kIsEnter];
     }
+}
+
++ (NSString *)searchCountryCode:(NSString *)countryTitle
+{
+    NSArray *countryCodes = [NSLocale ISOCountryCodes];
+    for (NSString *countryCode in countryCodes)
+    {
+        NSString *identifier = [NSLocale localeIdentifierFromComponents:[NSDictionary dictionaryWithObject:countryCode forKey:NSLocaleCountryCode]];
+        NSString *formattedCode = [[identifier stringByReplacingOccurrencesOfString:@"_" withString:@""] lowercaseString];
+        NSString *country = [[[NSLocale alloc] initWithLocaleIdentifier:@"en_UK"] displayNameForKey:NSLocaleIdentifier value:identifier];
+        
+        if ([country isEqualToString:countryTitle]) {
+            return formattedCode;
+        }
+        
+    }
+    return nil;
 }
 
 @end

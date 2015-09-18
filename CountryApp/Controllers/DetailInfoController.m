@@ -26,9 +26,9 @@
 {
     [super viewDidLoad];
     self.title = self.obj.title;
-    self.continent.text = self.obj.continent.title;
-    self.country.text = self.obj.title;
-    self.capital.text = self.obj.capital;
+    self.continent.text  = self.obj.continent.title;
+    self.country.text    = self.obj.title;
+    self.capital.text    = self.obj.capital;
     self.population.text = [NSString stringWithFormat:@"%@", self.obj.population ?: @""];
 }
 

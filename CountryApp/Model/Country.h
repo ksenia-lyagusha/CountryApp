@@ -2,23 +2,22 @@
 //  Country.h
 //  
 //
-//  Created by Оксана on 10.09.15.
+//  Created by Оксана on 16.09.15.
 //
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-
+#import <UIKit/UIKit.h>
 @class Continent;
 
 @interface Country : NSManagedObject
 
-@property (nonatomic, retain) NSString * capital;
-@property (nonatomic, retain) NSString * title;
-@property (nonatomic, retain) NSNumber * population;
+@property (nonatomic, retain) NSString  * capital;
+@property (nonatomic, retain) NSNumber  * population;
+@property (nonatomic, retain) NSString  * title;
+@property (nonatomic, retain) NSData    * image;
 @property (nonatomic, retain) Continent *continent;
-
-- (NSString*)additionalInfo;
 
 /**
  *  Creates a new Country object in DB
@@ -30,5 +29,10 @@
  *
  *  @return Country object
  */
-+ (Country*)countryWithContinentOrContinentTitle:(id)continent country:(NSString *)country capital:(NSString *)capital population:(NSNumber *)population;
+- (Country*)countryWithContinentOrContinentTitle:(id)continent country:(NSString *)country capital:(NSString *)capital population:(NSNumber *)population;
+
+- (NSString*)additionalInfo;
+
+- (void)addImageObject:(UIImage *)image;
+- (void)downloadImage;
 @end

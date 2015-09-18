@@ -19,7 +19,7 @@
 + (Continent *)continentWithTitle:(NSString *)continent
 {
     Continent *obj = [Continent MR_createEntity];
-    obj.title = continent;
+    obj.title      = continent;
     return obj;
 }
 
