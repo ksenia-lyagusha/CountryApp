@@ -1,4 +1,4 @@
-//
+ //
 //  Country.m
 //  
 //
@@ -54,10 +54,10 @@
 - (void)downloadImage
 {
     NSString *code = [CountryAppModel searchCountryCode:self.title];
-    FlagLoading *flagLoading = [[FlagLoading alloc] init];
+    FlagLoading *flagLoading = [FlagLoading sharedInstance];
     NSString *link = [flagLoading formatSiteLink:code];
     [flagLoading sendRequest:link withImageHandler:^(UIImage * image) {
-        [self addImageObject:image];        
+        [self addImageObject:image];
     }];
 }
 @end

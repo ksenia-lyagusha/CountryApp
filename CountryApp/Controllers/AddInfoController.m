@@ -74,6 +74,7 @@
 {
     self.scrollView.contentInset          = UIEdgeInsetsZero;
     self.scrollView.scrollIndicatorInsets = UIEdgeInsetsZero;
+    
 }
 
 - (IBAction)backAndSave:(UIBarButtonItem *)sender
@@ -159,7 +160,9 @@
         
     } else {
         [textField resignFirstResponder];
+        [self backAndSave:self.navigationItem.rightBarButtonItem];
     }
+    
     return YES;
 }
 
@@ -189,25 +192,27 @@
 
 - (void)imageDownload
 {
-    FlagLoading *flagLoading = [[FlagLoading alloc] init];
-    
     NSString *code = [CountryAppModel searchCountryCode:self.countryField.text];
-    NSString *link = [flagLoading formatSiteLink:code];
     
     if (code) {
-    
+        
+        FlagLoading *flagLoading = [FlagLoading sharedInstance];
+         NSString *link = [flagLoading formatSiteLink:code];
+         __weak AddInfoController *weakSelf = self;
+        
         [flagLoading sendRequest:link withImageHandler:^(UIImage * image) {
-            
-            CGFloat ratio = image.size.height / self.layoutHeight.constant;
+           
+            CGFloat ratio = image.size.height / weakSelf.layoutHeight.constant;
             CGFloat newWidth = image.size.width / ratio;
-            self.layoutWidth.constant = newWidth;
+            weakSelf.layoutWidth.constant = newWidth;
 
-            self.imageView.image = image;
-            if (!self.imageView.image) {
-                self.imageView.image = [UIImage imageNamed:@"01"];
+            weakSelf.imageView.image = image;
+            if (!weakSelf.imageView.image) {
+                weakSelf.imageView.image = [UIImage imageNamed:@"01"];
             }
         }];
     }
+    
 }
 
 

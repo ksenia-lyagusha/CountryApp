@@ -11,6 +11,8 @@
 
 @interface FlagLoading : NSObject <NSURLSessionDataDelegate>
 
-- (void)sendRequest:(NSString *)siteLink withImageHandler:(void(^)(UIImage*))image;
++ (FlagLoading*)sharedInstance;
+- (void)sendRequest:(NSString *)siteLink withImageHandler:(void(^)(UIImage*))imageBlock;
 - (NSString *)formatSiteLink:(NSString *)link;
+
 @end

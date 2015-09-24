@@ -62,7 +62,6 @@
         [self addContinentObjects];
         [self addCountryObjects];
         
-//        [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
         [defaults setBool:YES forKey:kIsEnter];
     }
 }
