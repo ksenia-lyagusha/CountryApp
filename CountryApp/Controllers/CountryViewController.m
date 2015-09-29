@@ -37,7 +37,7 @@
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         exit(-1);  // Fail
     }
-    self.navigationItem.leftBarButtonItem  = self.editButtonItem;
+    self.navigationItem.leftBarButtonItem  = self.editButtonItem;  
 }
 
 - (void)viewWillAppear:(BOOL)animated

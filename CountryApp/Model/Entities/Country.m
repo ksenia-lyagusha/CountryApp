@@ -1,25 +1,18 @@
- //
-//  Country.m
-//  
-//
-//  Created by Оксана on 16.09.15.
-//
-//
 
+
+#import "Country.h"
 #import "Country.h"
 #import "Continent.h"
 #import "MagicalRecord.h"
 #import "CountryAppModel.h"
 #import "FlagLoading.h"
+#import <CoreLocation/CLAvailability.h>
+
+@interface Country ()
+
+@end
 
 @implementation Country
-
-@dynamic capital;
-@dynamic population;
-@dynamic title;
-@dynamic image;
-@dynamic continent;
-
 
 - (Country*)countryWithContinentOrContinentTitle:(id)continent country:(NSString *)country capital:(NSString *)capital population:(NSNumber *)population
 {
@@ -28,7 +21,7 @@
     self.title      = country;
     self.capital    = capital;
     self.population = population;
-
+    
     return self;
 }
 
@@ -48,7 +41,6 @@
 {
     NSData *imageData = UIImagePNGRepresentation(image);
     self.image        = imageData;
-    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
 }
 
 - (void)downloadImage
@@ -59,5 +51,11 @@
     [flagLoading sendRequest:link withImageHandler:^(UIImage * image) {
         [self addImageObject:image];
     }];
+}
+
+- (void)addLongitude:(double)longitude andLatitude:(double)latitude
+{
+    self.longitudeValue = longitude;
+    self.latitudeValue = latitude;
 }
 @end

@@ -1,20 +1,13 @@
-//
-//  Continent.m
-//  
-//
-//  Created by Оксана on 10.09.15.
-//
-//
 
 #import "Continent.h"
 #import "Country.h"
 #import "MagicalRecord.h"
 
+@interface Continent ()
+
+@end
+
 @implementation Continent
-
-@dynamic title;
-@dynamic country;
-
 
 + (Continent *)continentWithTitle:(NSString *)continent
 {
@@ -22,5 +15,6 @@
     obj.title      = continent;
     return obj;
 }
+
 
 @end

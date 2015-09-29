@@ -12,8 +12,10 @@
 #import "MagicalRecord.h"
 #import "FlagLoading.h"
 #import "CountryAppModel.h"
+#import "LocationViewController.h"
+#import <MapKit/MapKit.h>
 
-@interface AddInfoController() <UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
+@interface AddInfoController() <UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate, LocationViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIPickerView *pickerView;
 @property (weak, nonatomic) IBOutlet UITextField *countryField;
@@ -27,6 +29,8 @@
 
 @property (strong, nonatomic) NSArray *continents;
 
+@property CLLocationCoordinate2D coordinates;
+
 @end
 
 @implementation AddInfoController
@@ -39,6 +43,7 @@
     self.continents = [Continent MR_findAllSortedBy:@"title" ascending:YES];
     self.imageView.layer.cornerRadius = 4.0;
     self.imageView.layer.masksToBounds = YES;
+    
 }
 
 -  (void)viewWillAppear:(BOOL)animated
@@ -103,13 +108,17 @@
         
         self.capitalField.text = [self.capitalField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         self.countryField.text = [self.countryField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        
         Country *country = [Country MR_createEntity];
         [country countryWithContinentOrContinentTitle:[self.continents objectAtIndex:index]
                                               country:self.countryField.text
                                               capital:self.capitalField.text
                                            population:@([self.populationField.text integerValue])];
         
+        [country addLongitude:self.coordinates.longitude andLatitude:self.coordinates.latitude];
         [country addImageObject:self.imageView.image];
+        
+        [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
         [self dismissViewControllerAnimated:YES completion:nil];
     }
     [self.view endEditing:YES];
@@ -212,8 +221,22 @@
             }
         }];
     }
-    
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"LocationSegue"]) {
+        LocationViewController *locationVC = [segue destinationViewController];
+        locationVC.delegate = self;
+        locationVC.coordinates2D = self.coordinates;
+    }
 }
 
 
+#pragma mark - LocationViewDelegate
+
+- (void)obtainCoordinates:(CLLocationCoordinate2D)coordinates
+{
+    self.coordinates = coordinates;
+}
 @end

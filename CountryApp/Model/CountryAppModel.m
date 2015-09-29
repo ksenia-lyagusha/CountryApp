@@ -12,6 +12,11 @@
 #import "MagicalRecord.h"
 
 #define kIsEnter @"Counter"
+@interface CountryAppModel ()
+
+@property (strong, nonatomic) NSMutableDictionary *countriesAndCodes;
+
+@end
 
 @implementation CountryAppModel
 
@@ -28,6 +33,27 @@
     return _sharedInstance;
 }
 
+- (instancetype)init
+{
+    self = [super init];
+    
+    if (self) {
+        
+        self.countriesAndCodes = [NSMutableDictionary dictionary];
+        
+        NSArray *countryCodes = [NSLocale ISOCountryCodes];
+        
+        for (NSString *countryCode in countryCodes)
+        {
+            NSString *identifier = [NSLocale localeIdentifierFromComponents:[NSDictionary dictionaryWithObject:countryCode forKey:NSLocaleCountryCode]];
+
+            NSString *country = [[[NSLocale alloc] initWithLocaleIdentifier:@"en_UK"] displayNameForKey:NSLocaleIdentifier value:identifier];
+            [self.countriesAndCodes setObject:identifier forKey:country];
+        }
+    }
+    return self;
+}
+
 - (void)addCountryObjects
 {
     NSString *defaultPath = [[NSBundle mainBundle] pathForResource:@"CountriesAndCapitals" ofType:@"plist"];
@@ -36,12 +62,15 @@
       
         Country *country = [Country MR_createEntity];
         
-       [country countryWithContinentOrContinentTitle:informationOfCountry[@"continent"]
-                                             country:informationOfCountry[@"country"]
-                                             capital:informationOfCountry[@"capital"]
-                                          population:informationOfCountry[@"population"]];
+        [country countryWithContinentOrContinentTitle:informationOfCountry[@"continent"]
+                                              country:informationOfCountry[@"country"]
+                                              capital:informationOfCountry[@"capital"]
+                                           population:informationOfCountry[@"population"]];
+
+        [country addLongitude:[informationOfCountry[@"longitude"] doubleValue] andLatitude:[informationOfCountry[@"latitude"]doubleValue]];
         [country downloadImage];
     }
+    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
 }
 
 - (void)addContinentObjects
@@ -68,19 +97,11 @@
 
 + (NSString *)searchCountryCode:(NSString *)countryTitle
 {
-    NSArray *countryCodes = [NSLocale ISOCountryCodes];
-    for (NSString *countryCode in countryCodes)
-    {
-        NSString *identifier = [NSLocale localeIdentifierFromComponents:[NSDictionary dictionaryWithObject:countryCode forKey:NSLocaleCountryCode]];
-        NSString *formattedCode = [[identifier stringByReplacingOccurrencesOfString:@"_" withString:@""] lowercaseString];
-        NSString *country = [[[NSLocale alloc] initWithLocaleIdentifier:@"en_UK"] displayNameForKey:NSLocaleIdentifier value:identifier];
-        
-        if ([country isEqualToString:countryTitle]) {
-            return formattedCode;
-        }
-        
-    }
-    return nil;
+    CountryAppModel *obj = [CountryAppModel sharedInstance];
+    NSString *ident = [obj.countriesAndCodes objectForKey:countryTitle];
+    NSString *formattedCode = [[ident stringByReplacingOccurrencesOfString:@"_" withString:@""] lowercaseString];
+   
+    return formattedCode;
 }
 
 @end

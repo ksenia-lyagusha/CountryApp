@@ -9,6 +9,6 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@interface AddInfoController : UIViewController 
+@interface AddInfoController : UIViewController
 
 @end

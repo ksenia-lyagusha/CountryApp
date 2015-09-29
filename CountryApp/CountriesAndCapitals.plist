@@ -9,6 +9,10 @@
 		<string>Ukraine</string>
 		<key>capital</key>
 		<string>Kyiv</string>
+		<key>longitude</key>
+		<real>36.292617</real>
+		<key>latitude</key>
+		<real>50.021288</real>
 	</dict>
 	<dict>
 		<key>continent</key>
@@ -17,6 +21,10 @@
 		<string>Poland</string>
 		<key>capital</key>
 		<string>Warsaw</string>
+		<key>longitude</key>
+		<real>21.007636</real>
+		<key>latitude</key>
+		<real>52.227891</real>
 	</dict>
 	<dict>
 		<key>continent</key>
@@ -25,6 +33,10 @@
 		<string>Austria</string>
 		<key>capital</key>
 		<string>Vienna</string>
+		<key>longitude</key>
+		<real>16.376988</real>
+		<key>latitude</key>
+		<real>48.233535</real>
 	</dict>
 	<dict>
 		<key>continent</key>
@@ -33,6 +45,10 @@
 		<string>China</string>
 		<key>capital</key>
 		<string>Beijing</string>
+		<key>longitude</key>
+		<real>116.360243</real>
+		<key>latitude</key>
+		<real>39.915663</real>
 	</dict>
 	<dict>
 		<key>continent</key>
@@ -41,6 +57,10 @@
 		<string>South Korea</string>
 		<key>capital</key>
 		<string>Seoul</string>
+		<key>longitude</key>
+		<real>126.968244</real>
+		<key>latitude</key>
+		<real>37.548577</real>
 	</dict>
 	<dict>
 		<key>continent</key>
@@ -49,6 +69,10 @@
 		<string>Tunisia</string>
 		<key>capital</key>
 		<string>Tunis</string>
+		<key>longitude</key>
+		<real>10.147436</real>
+		<key>latitude</key>
+		<real>36.798472</real>
 	</dict>
 	<dict>
 		<key>continent</key>
@@ -57,6 +81,10 @@
 		<string>Canada</string>
 		<key>capital</key>
 		<string>Ottawa</string>
+		<key>longitude</key>
+		<real>-75.684369</real>
+		<key>latitude</key>
+		<real>45.449929</real>
 	</dict>
 	<dict>
 		<key>continent</key>
@@ -67,6 +95,10 @@
 		<string>Pretoria</string>
 		<key>population</key>
 		<integer>741651</integer>
+		<key>longitude</key>
+		<real>28.339223</real>
+		<key>latitude</key>
+		<real>-25.770959</real>
 	</dict>
 </array>
 </plist>
