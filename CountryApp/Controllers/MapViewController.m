@@ -12,6 +12,7 @@
 #import "Country.h"
 
 #define METERS_PER_MILE 1609.344
+
 @interface MapViewController () <MKMapViewDelegate>
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 
@@ -29,7 +30,7 @@
 {
     CLLocationCoordinate2D zoomLocation = CLLocationCoordinate2DMake(self.country.latitudeValue, self.country.longitudeValue);
 
-    MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(zoomLocation, 90*METERS_PER_MILE, 90*METERS_PER_MILE);
+    MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(zoomLocation, 1500*METERS_PER_MILE, 1500*METERS_PER_MILE);
     
     [_mapView setRegion:viewRegion animated:YES];
     

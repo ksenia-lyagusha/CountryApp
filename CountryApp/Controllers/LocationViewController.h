@@ -18,8 +18,10 @@
 
 @interface LocationViewController : UIViewController
 
-@property id <LocationViewDelegate> delegate;
+//@property id <LocationViewDelegate> delegate;
 @property CLLocationCoordinate2D coordinates2D;
+- (void)fetchCoordinatesWithBlock:(void (^)(CLLocationCoordinate2D ))coordinatesBlock;
+
 @end
 
 

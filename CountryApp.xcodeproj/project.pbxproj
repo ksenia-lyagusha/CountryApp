@@ -33,6 +33,7 @@
 		D78D76CC1B91A7B40050E369 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D78D76CB1B91A7B40050E369 /* CoreData.framework */; };
 		D796AE231BAA984E0086830D /* CountryApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D796AE1D1BAA984E0086830D /* CountryApp.xcdatamodeld */; settings = {ASSET_TAGS = (); }; };
 		D796AE241BAA984E0086830D /* CountryAppModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D796AE201BAA984E0086830D /* CountryAppModel.m */; settings = {ASSET_TAGS = (); }; };
+		D79BEFAF1BBBF9F5001EF036 /* TabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D79BEFAE1BBBF9F5001EF036 /* TabBarViewController.m */; settings = {ASSET_TAGS = (); }; };
 		D7B9DDDC1BB9462300CCE402 /* _Continent.m in Sources */ = {isa = PBXBuildFile; fileRef = D7B9DDD91BB9462300CCE402 /* _Continent.m */; settings = {ASSET_TAGS = (); }; };
 		D7B9DDDD1BB9462300CCE402 /* _Country.m in Sources */ = {isa = PBXBuildFile; fileRef = D7B9DDDB1BB9462300CCE402 /* _Country.m */; settings = {ASSET_TAGS = (); }; };
 		D7B9DDEA1BB94B9700CCE402 /* Continent.m in Sources */ = {isa = PBXBuildFile; fileRef = D7B9DDE71BB94B9700CCE402 /* Continent.m */; settings = {ASSET_TAGS = (); }; };
@@ -81,6 +82,8 @@
 		D796AE1E1BAA984E0086830D /* CountryApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CountryApp.xcdatamodel; sourceTree = "<group>"; };
 		D796AE1F1BAA984E0086830D /* CountryAppModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountryAppModel.h; sourceTree = "<group>"; };
 		D796AE201BAA984E0086830D /* CountryAppModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CountryAppModel.m; sourceTree = "<group>"; };
+		D79BEFAD1BBBF9F5001EF036 /* TabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarViewController.h; sourceTree = "<group>"; };
+		D79BEFAE1BBBF9F5001EF036 /* TabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabBarViewController.m; sourceTree = "<group>"; };
 		D7B9DDD81BB9462300CCE402 /* _Continent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _Continent.h; sourceTree = "<group>"; };
 		D7B9DDD91BB9462300CCE402 /* _Continent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _Continent.m; sourceTree = "<group>"; };
 		D7B9DDDA1BB9462300CCE402 /* _Country.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _Country.h; sourceTree = "<group>"; };
@@ -256,6 +259,8 @@
 				D78C57A61BB56A2E0042596D /* MapViewController.m */,
 				D7B9DDEC1BB95AC800CCE402 /* LocationViewController.h */,
 				D7B9DDED1BB95AC800CCE402 /* LocationViewController.m */,
+				D79BEFAD1BBBF9F5001EF036 /* TabBarViewController.h */,
+				D79BEFAE1BBBF9F5001EF036 /* TabBarViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -451,6 +456,7 @@
 				D796AE231BAA984E0086830D /* CountryApp.xcdatamodeld in Sources */,
 				D7C79F591BAA7E9E001795D4 /* AddInfoController.m in Sources */,
 				D7B9DDEE1BB95AC800CCE402 /* LocationViewController.m in Sources */,
+				D79BEFAF1BBBF9F5001EF036 /* TabBarViewController.m in Sources */,
 				D7B9DDDC1BB9462300CCE402 /* _Continent.m in Sources */,
 				D7B9DDDD1BB9462300CCE402 /* _Country.m in Sources */,
 				D7C79F8C1BAA8390001795D4 /* main.m in Sources */,
@@ -681,6 +687,7 @@
 				D7B9DDD41BB9300E00CCE402 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

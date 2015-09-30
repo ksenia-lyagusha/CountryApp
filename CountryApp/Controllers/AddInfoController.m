@@ -43,7 +43,6 @@
     self.continents = [Continent MR_findAllSortedBy:@"title" ascending:YES];
     self.imageView.layer.cornerRadius = 4.0;
     self.imageView.layer.masksToBounds = YES;
-    
 }
 
 -  (void)viewWillAppear:(BOOL)animated
@@ -59,6 +58,12 @@
                       selector:@selector(keyboardDidHide:)
                           name:UIKeyboardDidHideNotification
                         object:nil];
+    
+    // add notification to listen events about changing coordinates
+//    [defaultCenter addObserver:self
+//                      selector:@selector(receiveTestNotification:)
+//                          name:@"TestNotification"
+//                        object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -67,7 +72,7 @@
     [self.countryField becomeFirstResponder];
 }
 
-- (void)keyBoardDidShow:(NSNotification*)notification
+- (void)keyBoardDidShow:(NSNotification *)notification
 {
     NSDictionary *info = [notification userInfo];
     CGSize kbSize                         = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
@@ -75,12 +80,22 @@
     self.scrollView.scrollIndicatorInsets = UIEdgeInsetsMake(64, 0, kbSize.height, 0);
 }
 
-- (void)keyboardDidHide:(NSNotification*)notification
+- (void)keyboardDidHide:(NSNotification *)notification
 {
     self.scrollView.contentInset          = UIEdgeInsetsZero;
     self.scrollView.scrollIndicatorInsets = UIEdgeInsetsZero;
     
 }
+
+ // add notification to listen events about changing coordinates
+//- (void)receiveTestNotification:(NSNotification *)notification
+//{
+//    if ([notification.name isEqualToString:@"TestNotification"]) {
+//        NSDictionary* userInfo = notification.userInfo;
+//
+//        self.coordinates = [userInfo[@"coord2D"] MKCoordinateValue];
+//    }
+//}
 
 - (IBAction)backAndSave:(UIBarButtonItem *)sender
 {
@@ -119,6 +134,10 @@
         [country addImageObject:self.imageView.image];
         
         [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+        
+        //notification
+//        [[NSNotificationCenter defaultCenter] removeObserver:self];
+        
         [self dismissViewControllerAnimated:YES completion:nil];
     }
     [self.view endEditing:YES];
@@ -204,34 +223,42 @@
     NSString *code = [CountryAppModel searchCountryCode:self.countryField.text];
     
     if (code) {
-        
         FlagLoading *flagLoading = [FlagLoading sharedInstance];
          NSString *link = [flagLoading formatSiteLink:code];
          __weak AddInfoController *weakSelf = self;
         
         [flagLoading sendRequest:link withImageHandler:^(UIImage * image) {
            
+            if (!image) {
+                weakSelf.imageView.image = [UIImage imageNamed:@"01"];
+                return ;
+            }
             CGFloat ratio = image.size.height / weakSelf.layoutHeight.constant;
             CGFloat newWidth = image.size.width / ratio;
             weakSelf.layoutWidth.constant = newWidth;
 
             weakSelf.imageView.image = image;
-            if (!weakSelf.imageView.image) {
-                weakSelf.imageView.image = [UIImage imageNamed:@"01"];
-            }
         }];
+    } else {
+        self.imageView.image = [UIImage imageNamed:@"01"];
     }
+    
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"LocationSegue"]) {
         LocationViewController *locationVC = [segue destinationViewController];
-        locationVC.delegate = self;
+//        locationVC.delegate = self;
         locationVC.coordinates2D = self.coordinates;
+        
+        // block 
+        __weak AddInfoController *weekSelf = self;
+        [locationVC fetchCoordinatesWithBlock:^(CLLocationCoordinate2D coord2D){
+            weekSelf.coordinates = coord2D;
+        }];
     }
 }
-
 
 #pragma mark - LocationViewDelegate
 

@@ -113,8 +113,8 @@
     
     NSString *code = [CountryAppModel searchCountryCode:obj.title];
     UILabel *countryTitle = (UILabel *)[cell viewWithTag:101];
-    countryTitle.text     = [NSString stringWithFormat:@"%@ (%@)", obj.title, [code uppercaseString]];
     
+    countryTitle.text     = code ? [NSString stringWithFormat:@"%@ (%@)", obj.title, [code uppercaseString]] :  obj.title;
     UILabel *capitalTitle = (UILabel *)[cell viewWithTag:102];
     capitalTitle.text     = [obj additionalInfo];
 }

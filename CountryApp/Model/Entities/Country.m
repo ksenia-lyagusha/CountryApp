@@ -56,6 +56,6 @@
 - (void)addLongitude:(double)longitude andLatitude:(double)latitude
 {
     self.longitudeValue = longitude;
-    self.latitudeValue = latitude;
+    self.latitudeValue  = latitude;
 }
 @end

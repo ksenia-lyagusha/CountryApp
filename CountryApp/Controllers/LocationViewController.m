@@ -13,6 +13,8 @@
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property MKPointAnnotation *pin;
 @property BOOL isFirst;
+@property (copy) void(^coordinatesHandler)(CLLocationCoordinate2D);
+
 @end
 
 @implementation LocationViewController
@@ -30,6 +32,15 @@
     }
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:YES];
+    
+    // block
+    if (self.coordinatesHandler) {
+        self.coordinatesHandler(self.pin.coordinate);
+    }
+}
 - (void)selectLocation:(UILongPressGestureRecognizer *)recognizer
 {
     if (self.isFirst) {
@@ -41,7 +52,15 @@
         CGPoint touchPoint = [recognizer locationInView:self.mapView];
         CLLocationCoordinate2D coordinates = [self.mapView convertPoint:touchPoint toCoordinateFromView:self.mapView];
 
-        [self.delegate obtainCoordinates:coordinates];
+        // delegate
+//        [self.delegate obtainCoordinates:coordinates];
+        
+        // notification
+//        NSValue *value = [NSValue valueWithMKCoordinate:coordinates];
+//        NSDictionary *userInfo = @{@"coord2D" : value};
+//        
+//        NSNotificationCenter *notification = [NSNotificationCenter defaultCenter];
+//        [notification postNotificationName:@"TestNotification" object:self userInfo:userInfo];
         
         self.pin.coordinate = coordinates;
         [self.mapView addAnnotation:self.pin];
@@ -49,6 +68,10 @@
         self.isFirst = NO;
     }
 }
-
+// block
+- (void)fetchCoordinatesWithBlock:(void (^)(CLLocationCoordinate2D ))coordinatesBlock
+{
+    self.coordinatesHandler = coordinatesBlock;
+}
 
 @end
