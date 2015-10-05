@@ -8,7 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "Country.h"
 
 @interface AddInfoController : UIViewController
+
+@property Country *countryObj;
 
 @end

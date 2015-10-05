@@ -7,7 +7,6 @@
 //
 
 #import "AddInfoController.h"
-#import "Country.h"
 #import "Continent.h"
 #import "MagicalRecord.h"
 #import "FlagLoading.h"
@@ -43,6 +42,18 @@
     self.continents = [Continent MR_findAllSortedBy:@"title" ascending:YES];
     self.imageView.layer.cornerRadius = 4.0;
     self.imageView.layer.masksToBounds = YES;
+    
+    if (self.countryObj) {
+        self.title = @"Editing...";
+        self.countryField.text = self.countryObj.title;
+        self.capitalField.text = self.countryObj.capital;
+        self.populationField.text = [self.countryObj.population stringValue];
+        
+        NSInteger index = [self.continents indexOfObject:self.countryObj.continent];
+        [self.pickerView selectRow:index inComponent:0 animated:NO];
+        
+        self.coordinates = CLLocationCoordinate2DMake(self.countryObj.latitudeValue, self.countryObj.longitudeValue);
+    }
 }
 
 -  (void)viewWillAppear:(BOOL)animated
@@ -64,6 +75,7 @@
 //                      selector:@selector(receiveTestNotification:)
 //                          name:@"TestNotification"
 //                        object:nil];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -75,15 +87,22 @@
 - (void)keyBoardDidShow:(NSNotification *)notification
 {
     NSDictionary *info = [notification userInfo];
-    CGSize kbSize                         = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
-    self.scrollView.contentInset          = UIEdgeInsetsMake(0, 0, kbSize.height, 0);
-    self.scrollView.scrollIndicatorInsets = UIEdgeInsetsMake(64, 0, kbSize.height, 0);
+    CGSize kbSize      = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    
+    UIEdgeInsets contentInsets   = self.scrollView.contentInset;
+    contentInsets.bottom         = kbSize.height;
+    
+    self.scrollView.contentInset          = contentInsets;
+    self.scrollView.scrollIndicatorInsets = contentInsets;
 }
 
 - (void)keyboardDidHide:(NSNotification *)notification
 {
-    self.scrollView.contentInset          = UIEdgeInsetsZero;
-    self.scrollView.scrollIndicatorInsets = UIEdgeInsetsZero;
+    UIEdgeInsets contentInsets   = self.scrollView.contentInset;
+    contentInsets.bottom         = 0;
+    
+    self.scrollView.contentInset          = contentInsets;
+    self.scrollView.scrollIndicatorInsets = contentInsets;
     
 }
 
@@ -124,7 +143,8 @@
         self.capitalField.text = [self.capitalField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         self.countryField.text = [self.countryField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         
-        Country *country = [Country MR_createEntity];
+        Country *country = (!self.countryObj) ? [Country MR_createEntity] : self.countryObj;
+        
         [country countryWithContinentOrContinentTitle:[self.continents objectAtIndex:index]
                                               country:self.countryField.text
                                               capital:self.capitalField.text
@@ -211,9 +231,7 @@
 
 - (NSString*)pickerView:(UIPickerView*)thePickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    Continent *continent = [self.continents objectAtIndex:row];
-    NSString *str = continent.title;
-    return str;
+    return [[self.continents objectAtIndex:row] title];
 }
 
 #pragma mark - Others

@@ -8,6 +8,8 @@
 
 #import "LocationViewController.h"
 
+#define METERS_PER_MILE 1609.344
+
 @interface LocationViewController () 
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
@@ -27,9 +29,15 @@
     
     self.pin = [[MKPointAnnotation alloc] init];
     if (self.coordinates2D.latitude) {
+        
+        CLLocationCoordinate2D coordinates = self.coordinates2D;
+        MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(coordinates, 1500*METERS_PER_MILE, 1500*METERS_PER_MILE);
+         [_mapView setRegion:viewRegion animated:YES];
+        
         self.pin.coordinate = self.coordinates2D;
         [self.mapView addAnnotation:self.pin];
     }
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -51,7 +59,7 @@
 
         CGPoint touchPoint = [recognizer locationInView:self.mapView];
         CLLocationCoordinate2D coordinates = [self.mapView convertPoint:touchPoint toCoordinateFromView:self.mapView];
-
+        
         // delegate
 //        [self.delegate obtainCoordinates:coordinates];
         

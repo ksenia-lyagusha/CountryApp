@@ -70,7 +70,6 @@
         [country addLongitude:[informationOfCountry[@"longitude"] doubleValue] andLatitude:[informationOfCountry[@"latitude"]doubleValue]];
         [country downloadImage];
     }
-    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
 }
 
 - (void)addContinentObjects

@@ -41,6 +41,7 @@
 {
     NSData *imageData = UIImagePNGRepresentation(image);
     self.image        = imageData;
+    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
 }
 
 - (void)downloadImage

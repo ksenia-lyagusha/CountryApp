@@ -12,6 +12,7 @@
 #import "Continent.h"
 #import "MapViewController.h"
 #import "CountryAppModel.h"
+#import "AddInfoController.h"
 
 @interface DetailInfoController ()
 
@@ -20,13 +21,16 @@
 @property (weak, nonatomic) IBOutlet UILabel *capital;
 @property (weak, nonatomic) IBOutlet UILabel *population;
 
+@property (weak, nonatomic) IBOutlet UIButton *editButon;
+
 @end
 
 @implementation DetailInfoController
 
-- (void)viewDidLoad
+- (void)viewWillAppear:(BOOL)animated
 {
-    [super viewDidLoad];
+    [super viewWillAppear:YES];
+    
     self.title           = self.obj.title;
     NSString *code       = [CountryAppModel searchCountryCode:self.title];
     self.country.text    = code ? [NSString stringWithFormat:@"%@ (%@)", self.obj.title, [code uppercaseString]] : self.obj.title;
@@ -42,6 +46,12 @@
     
         MapViewController *mapViewController = (MapViewController*)navigationController.topViewController;
         mapViewController.country = self.obj;
+        
+    } else if ([segue.identifier isEqualToString:@"AddInfoSegue"]) {
+        UINavigationController *navigationController = segue.destinationViewController;
+        AddInfoController *addInfo = (AddInfoController*)navigationController.topViewController;
+        addInfo.countryObj = self.obj;
     }
+    
 }
 @end
