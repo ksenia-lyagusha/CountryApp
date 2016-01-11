@@ -248,7 +248,7 @@
         [flagLoading sendRequest:link withImageHandler:^(UIImage * image) {
            
             if (!image) {
-                weakSelf.imageView.image = [UIImage imageNamed:@"01"];
+                weakSelf.imageView.image = [UIImage imageNamed:@"notFound"];
                 return ;
             }
             CGFloat ratio = image.size.height / weakSelf.layoutHeight.constant;
@@ -258,7 +258,7 @@
             weakSelf.imageView.image = image;
         }];
     } else {
-        self.imageView.image = [UIImage imageNamed:@"01"];
+        self.imageView.image = [UIImage imageNamed:@"notFound"];
     }
     
 }

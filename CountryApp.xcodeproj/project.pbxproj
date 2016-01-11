@@ -21,34 +21,33 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		6BCE6D544CA8DB4EFA594E2A /* Pods_CountryApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15255C9F3CA0CAE6A73F4413 /* Pods_CountryApp.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		6BCE6D544CA8DB4EFA594E2A /* Pods_CountryApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15255C9F3CA0CAE6A73F4413 /* Pods_CountryApp.framework */; };
 		C5D4593F1AC8645D00E1C4EC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D4593E1AC8645D00E1C4EC /* AppDelegate.m */; };
 		C5D459471AC8645D00E1C4EC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C5D459461AC8645D00E1C4EC /* Images.xcassets */; };
 		C5D459561AC8645D00E1C4EC /* CountryAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D459551AC8645D00E1C4EC /* CountryAppTests.m */; };
-		D78C57A71BB56A2E0042596D /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D78C57A61BB56A2E0042596D /* MapViewController.m */; settings = {ASSET_TAGS = (); }; };
+		D78C57A71BB56A2E0042596D /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D78C57A61BB56A2E0042596D /* MapViewController.m */; };
 		D78C57A91BB5BDBB0042596D /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D78C57A81BB5BDBB0042596D /* MapKit.framework */; };
 		D78C57AB1BB5CA680042596D /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D78C57AA1BB5CA680042596D /* MobileCoreServices.framework */; };
 		D78C57AD1BB5CA800042596D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D78C57AC1BB5CA800042596D /* SystemConfiguration.framework */; };
 		D78C57AF1BB5CA870042596D /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D78C57AE1BB5CA870042596D /* CFNetwork.framework */; };
 		D78D76CC1B91A7B40050E369 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D78D76CB1B91A7B40050E369 /* CoreData.framework */; };
-		D796AE231BAA984E0086830D /* CountryApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D796AE1D1BAA984E0086830D /* CountryApp.xcdatamodeld */; settings = {ASSET_TAGS = (); }; };
-		D796AE241BAA984E0086830D /* CountryAppModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D796AE201BAA984E0086830D /* CountryAppModel.m */; settings = {ASSET_TAGS = (); }; };
-		D79BEFAF1BBBF9F5001EF036 /* TabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D79BEFAE1BBBF9F5001EF036 /* TabBarViewController.m */; settings = {ASSET_TAGS = (); }; };
-		D7B9DDDC1BB9462300CCE402 /* _Continent.m in Sources */ = {isa = PBXBuildFile; fileRef = D7B9DDD91BB9462300CCE402 /* _Continent.m */; settings = {ASSET_TAGS = (); }; };
-		D7B9DDDD1BB9462300CCE402 /* _Country.m in Sources */ = {isa = PBXBuildFile; fileRef = D7B9DDDB1BB9462300CCE402 /* _Country.m */; settings = {ASSET_TAGS = (); }; };
-		D7B9DDEA1BB94B9700CCE402 /* Continent.m in Sources */ = {isa = PBXBuildFile; fileRef = D7B9DDE71BB94B9700CCE402 /* Continent.m */; settings = {ASSET_TAGS = (); }; };
-		D7B9DDEB1BB94B9700CCE402 /* Country.m in Sources */ = {isa = PBXBuildFile; fileRef = D7B9DDE91BB94B9700CCE402 /* Country.m */; settings = {ASSET_TAGS = (); }; };
-		D7B9DDEE1BB95AC800CCE402 /* LocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D7B9DDED1BB95AC800CCE402 /* LocationViewController.m */; settings = {ASSET_TAGS = (); }; };
-		D7C79F591BAA7E9E001795D4 /* AddInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = D7C79F541BAA7E9E001795D4 /* AddInfoController.m */; settings = {ASSET_TAGS = (); }; };
-		D7C79F5A1BAA7E9E001795D4 /* CountryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D7C79F561BAA7E9E001795D4 /* CountryViewController.m */; settings = {ASSET_TAGS = (); }; };
-		D7C79F5B1BAA7E9E001795D4 /* DetailInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = D7C79F581BAA7E9E001795D4 /* DetailInfoController.m */; settings = {ASSET_TAGS = (); }; };
-		D7C79F5F1BAA7F47001795D4 /* FlagLoading.m in Sources */ = {isa = PBXBuildFile; fileRef = D7C79F5E1BAA7F47001795D4 /* FlagLoading.m */; settings = {ASSET_TAGS = (); }; };
-		D7C79F811BAA817B001795D4 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D7C79F781BAA817B001795D4 /* LaunchScreen.xib */; settings = {ASSET_TAGS = (); }; };
-		D7C79F841BAA8373001795D4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D7C79F831BAA8373001795D4 /* Main.storyboard */; settings = {ASSET_TAGS = (); }; };
-		D7C79F891BAA8390001795D4 /* Continents.plist in Resources */ = {isa = PBXBuildFile; fileRef = D7C79F851BAA8390001795D4 /* Continents.plist */; settings = {ASSET_TAGS = (); }; };
-		D7C79F8A1BAA8390001795D4 /* CountriesAndCapitals.plist in Resources */ = {isa = PBXBuildFile; fileRef = D7C79F861BAA8390001795D4 /* CountriesAndCapitals.plist */; settings = {ASSET_TAGS = (); }; };
-		D7C79F8B1BAA8390001795D4 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D7C79F871BAA8390001795D4 /* Info.plist */; settings = {ASSET_TAGS = (); }; };
-		D7C79F8C1BAA8390001795D4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D7C79F881BAA8390001795D4 /* main.m */; settings = {ASSET_TAGS = (); }; };
+		D796AE231BAA984E0086830D /* CountryApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D796AE1D1BAA984E0086830D /* CountryApp.xcdatamodeld */; };
+		D796AE241BAA984E0086830D /* CountryAppModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D796AE201BAA984E0086830D /* CountryAppModel.m */; };
+		D79BEFAF1BBBF9F5001EF036 /* TabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D79BEFAE1BBBF9F5001EF036 /* TabBarViewController.m */; };
+		D7B9DDDC1BB9462300CCE402 /* _Continent.m in Sources */ = {isa = PBXBuildFile; fileRef = D7B9DDD91BB9462300CCE402 /* _Continent.m */; };
+		D7B9DDDD1BB9462300CCE402 /* _Country.m in Sources */ = {isa = PBXBuildFile; fileRef = D7B9DDDB1BB9462300CCE402 /* _Country.m */; };
+		D7B9DDEA1BB94B9700CCE402 /* Continent.m in Sources */ = {isa = PBXBuildFile; fileRef = D7B9DDE71BB94B9700CCE402 /* Continent.m */; };
+		D7B9DDEB1BB94B9700CCE402 /* Country.m in Sources */ = {isa = PBXBuildFile; fileRef = D7B9DDE91BB94B9700CCE402 /* Country.m */; };
+		D7B9DDEE1BB95AC800CCE402 /* LocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D7B9DDED1BB95AC800CCE402 /* LocationViewController.m */; };
+		D7C79F591BAA7E9E001795D4 /* AddInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = D7C79F541BAA7E9E001795D4 /* AddInfoController.m */; };
+		D7C79F5A1BAA7E9E001795D4 /* CountryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D7C79F561BAA7E9E001795D4 /* CountryViewController.m */; };
+		D7C79F5B1BAA7E9E001795D4 /* DetailInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = D7C79F581BAA7E9E001795D4 /* DetailInfoController.m */; };
+		D7C79F5F1BAA7F47001795D4 /* FlagLoading.m in Sources */ = {isa = PBXBuildFile; fileRef = D7C79F5E1BAA7F47001795D4 /* FlagLoading.m */; };
+		D7C79F811BAA817B001795D4 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D7C79F781BAA817B001795D4 /* LaunchScreen.xib */; };
+		D7C79F841BAA8373001795D4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D7C79F831BAA8373001795D4 /* Main.storyboard */; };
+		D7C79F891BAA8390001795D4 /* Continents.plist in Resources */ = {isa = PBXBuildFile; fileRef = D7C79F851BAA8390001795D4 /* Continents.plist */; };
+		D7C79F8A1BAA8390001795D4 /* CountriesAndCapitals.plist in Resources */ = {isa = PBXBuildFile; fileRef = D7C79F861BAA8390001795D4 /* CountriesAndCapitals.plist */; };
+		D7C79F8C1BAA8390001795D4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D7C79F881BAA8390001795D4 /* main.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -322,7 +321,7 @@
 		C5D4592E1AC8645D00E1C4EC /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = ITCraft;
 				TargetAttributes = {
 					C5D459351AC8645D00E1C4EC = {
@@ -363,7 +362,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D7C79F841BAA8373001795D4 /* Main.storyboard in Resources */,
-				D7C79F8B1BAA8390001795D4 /* Info.plist in Resources */,
 				C5D459471AC8645D00E1C4EC /* Images.xcassets in Resources */,
 				D7C79F8A1BAA8390001795D4 /* CountriesAndCapitals.plist in Resources */,
 				D7C79F891BAA8390001795D4 /* Continents.plist in Resources */,
@@ -530,7 +528,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -565,7 +563,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
